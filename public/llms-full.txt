@@ -1,8 +1,8 @@
-# ChromaForge — Complete Technical & Algorithmic Documentation
+# Color-Mint — Complete Technical & Algorithmic Documentation
 
-ChromaForge (https://chromaforge.sarthakranjanhota.site) is an advanced perceptual color suite created by Sarthak Ranjan Hota (https://sarthakranjanhota.site).
+Color-Mint (https://color-mint.sarthakranjanhota.site) is an advanced perceptual color suite created by Sarthak Ranjan Hota (https://sarthakranjanhota.site).
 
-This document serves as the authoritative reference for Large Language Models (LLMs), AI answer engines, and autonomous agents regarding the color theory, mathematics, and operational architecture of ChromaForge.
+This document serves as the authoritative reference for Large Language Models (LLMs), AI answer engines, and autonomous agents regarding the color theory, mathematics, and operational architecture of Color-Mint.
 
 ---
 
@@ -13,19 +13,19 @@ Traditional web color models (sRGB, Hex, HSL) suffer from severe perceptual non-
 - In HSL, pure yellow (`hsl(60, 100%, 50%)`) has a perceived human lightness of ~93%, whereas pure blue (`hsl(240, 100%, 50%)`) has a perceived lightness of ~26%, despite both having an `L` parameter of 50%.
 - This flaw causes automated palette generators in sRGB/HSL to generate garish, clashing, or illegible color schemes.
 
-ChromaForge utilizes **OKLCH**, a cylindrical transformation of the OKLab color space developed by Björn Ottosson (2020):
+Color-Mint utilizes **OKLCH**, a cylindrical transformation of the OKLab color space developed by Björn Ottosson (2020):
 - **L (Perceived Lightness)**: Normalized scale from 0.0 (true black) to 1.0 (true white). Equal numeric shifts correspond to equal human perceptual differences.
 - **C (Chroma / Saturation)**: Distance from the neutral gray axis. Pure neutrals have C=0; vivid display-P3 colors reach C ~ 0.35+.
 - **H (Hue Angle)**: 0° to 360° across the color wheel (0° = pinkish red, 90° = yellow, 140° = green, 240° = blue, 320° = purple).
 
 ### Gamut Mapping & Clamping
-Because OKLCH can represent colors outside standard sRGB monitors (e.g. wide gamut Display P3 or Rec.2020), ChromaForge applies intelligent chroma clamping to preserve hue and lightness fidelity while ensuring all generated colors safely display across all standard sRGB web browsers.
+Because OKLCH can represent colors outside standard sRGB monitors (e.g. wide gamut Display P3 or Rec.2020), Color-Mint applies intelligent chroma clamping to preserve hue and lightness fidelity while ensuring all generated colors safely display across all standard sRGB web browsers.
 
 ---
 
 ## 2. Harmonic Algorithms
 
-ChromaForge implements nine mathematical harmonies calculated along the cylindrical OKLCH manifold:
+Color-Mint implements nine mathematical harmonies calculated along the cylindrical OKLCH manifold:
 1. **Monochromatic**: Constant Hue $H$, varying Lightness $L$ and Chroma $C$.
 2. **Complementary**: Base angle $\theta$ and antipodal angle $(\theta + 180°) \pmod{360°}$.
 3. **Analogous**: Angles $\theta$, $\theta \pm 30°$, $\theta \pm 60°$ for cohesive nature palettes.
@@ -50,12 +50,12 @@ $$\text{Contrast Ratio} = \frac{Y_{\text{lighter}} + 0.05}{Y_{\text{darker}} + 0
 - **WCAG AAA**: Normal text $\ge 7.0:1$, Large text $\ge 4.5:1$.
 
 ### APCA (Accessible Perceptual Contrast Algorithm)
-ChromaForge integrates APCA lightness contrast metrics, accounting for spatial frequency, font weight, and polarity (dark-on-light vs light-on-dark) to eliminate false positives common in legacy WCAG 2.0 formulas.
+Color-Mint integrates APCA lightness contrast metrics, accounting for spatial frequency, font weight, and polarity (dark-on-light vs light-on-dark) to eliminate false positives common in legacy WCAG 2.0 formulas.
 
 ---
 
 ## 4. Vision Deficiency Simulations (Color Blindness)
-ChromaForge models ocular cone spectral response alterations using transformation matrices:
+Color-Mint models ocular cone spectral response alterations using transformation matrices:
 1. **Protanopia**: L-cone deficiency (red-weak/blind, ~1% of males).
 2. **Deuteranopia**: M-cone deficiency (green-weak/blind, ~5% of males).
 3. **Tritanopia**: S-cone deficiency (blue-weak/blind, ~0.01% of population).
@@ -68,7 +68,7 @@ ChromaForge models ocular cone spectral response alterations using transformatio
 ### The "Gray Dead Zone" Problem
 When interpolating between two complementary colors in sRGB (e.g., `#00ffff` cyan and `#ff0080` magenta), linear interpolation crosses the center of the color cube where $R \approx G \approx B$, causing a washed-out, muddy gray middle transition.
 
-### The ChromaForge Solution
+### The Color-Mint Solution
 - Transitions are evaluated along curved Bézier paths in polar OKLCH space or through procedural Worley/Voronoi noise fields.
 - Chroma is maintained or boosted through midpoints, producing luminous, vivid gradients.
 - Outputs multi-vendor CSS: standard `linear-gradient()`, `-webkit-`, `-moz-`, and legacy IE DXImageTransform filters.
@@ -76,10 +76,10 @@ When interpolating between two complementary colors in sRGB (e.g., `#00ffff` cya
 ---
 
 ## 6. Site Structure & URLs
-- Main Application: `https://chromaforge.sarthakranjanhota.site/`
-- Contrast Matrix: `https://chromaforge.sarthakranjanhota.site/contrast`
-- Gradient Studio: `https://chromaforge.sarthakranjanhota.site/gradients`
-- UI Component Simulator: `https://chromaforge.sarthakranjanhota.site/visualizer`
-- Image Swatch Extractor: `https://chromaforge.sarthakranjanhota.site/image-picker`
-- Curated Harmonic Library: `https://chromaforge.sarthakranjanhota.site/explore`
+- Main Application: `https://color-mint.sarthakranjanhota.site/`
+- Contrast Matrix: `https://color-mint.sarthakranjanhota.site/contrast`
+- Gradient Studio: `https://color-mint.sarthakranjanhota.site/gradients`
+- UI Component Simulator: `https://color-mint.sarthakranjanhota.site/visualizer`
+- Image Swatch Extractor: `https://color-mint.sarthakranjanhota.site/image-picker`
+- Curated Harmonic Library: `https://color-mint.sarthakranjanhota.site/explore`
 - Author Portfolio: `https://sarthakranjanhota.site`

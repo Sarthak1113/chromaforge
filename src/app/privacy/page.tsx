@@ -36,7 +36,7 @@ export default function PrivacyPage() {
             Privacy Policy & Data Transparency
           </h1>
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-2xl">
-            ChromaForge is engineered as a 100% client-side design utility. We believe your creative workflow, palette data, and uploaded assets belong solely to you.
+            Color-Mint is engineered as a 100% client-side design utility. We believe your creative workflow, palette data, and uploaded assets belong solely to you.
           </p>
           <p className="text-xs text-zinc-500">
             Last Updated: November 16, 2026
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
               <h2 className="text-sm font-bold text-zinc-100">No Tracking or Analytics Cookies</h2>
             </div>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              ChromaForge does not employ invasive tracking cookies, third-party marketing beacons, or fingerprinting scripts. We do not sell, monetize, or harvest user telemetry.
+              Color-Mint does not employ invasive tracking cookies, third-party marketing beacons, or fingerprinting scripts. We do not sell, monetize, or harvest user telemetry.
             </p>
           </div>
 
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
               1. Information Collection & Usage
             </h2>
             <p className="text-zinc-400">
-              ChromaForge does not require account creation, login, or personal details (such as names, physical addresses, or payment credentials). You are completely anonymous while using any tool in this suite.
+              Color-Mint does not require account creation, login, or personal details (such as names, physical addresses, or payment credentials). You are completely anonymous while using any tool in this suite.
             </p>
           </div>
 
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
               3. External Links & Creator Contact
             </h2>
             <p className="text-zinc-400">
-              ChromaForge was engineered and designed by{" "}
+              Color-Mint was engineered and designed by{" "}
               <a
                 href="https://sarthakranjanhota.site"
                 target="_blank"
@@ -147,7 +147,7 @@ export default function PrivacyPage() {
               Curated Palettes
             </Link>
           </div>
-          <div>© {new Date().getFullYear()} ChromaForge. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} Color-Mint. All rights reserved.</div>
         </footer>
       </motion.main>
     </div>

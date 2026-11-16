@@ -4,18 +4,18 @@ export const metadata: Metadata = {
   title: "Image Extractor",
   description: "Extract beautiful palettes from your photos.",
   alternates: {
-    canonical: "https://chromaforge.sarthakranjanhota.site/image-picker",
+    canonical: "https://color-mint.sarthakranjanhota.site/image-picker",
   },
   openGraph: {
-    title: "Image Extractor — ChromaForge",
+    title: "Image Extractor — Color-Mint",
     description: "Extract beautiful palettes from your photos.",
-    url: "https://chromaforge.sarthakranjanhota.site/image-picker",
-    siteName: "ChromaForge",
+    url: "https://color-mint.sarthakranjanhota.site/image-picker",
+    siteName: "Color-Mint",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Image Extractor — ChromaForge",
+    title: "Image Extractor — Color-Mint",
     description: "Extract beautiful palettes from your photos.",
   },
 };

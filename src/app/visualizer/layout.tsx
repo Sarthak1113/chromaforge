@@ -5,19 +5,19 @@ export const metadata: Metadata = {
   description:
     "Preview your colors on real designs for a better visual understanding.",
   alternates: {
-    canonical: "https://chromaforge.sarthakranjanhota.site/visualizer",
+    canonical: "https://color-mint.sarthakranjanhota.site/visualizer",
   },
   openGraph: {
-    title: "Palette Visualizer — ChromaForge",
+    title: "Palette Visualizer — Color-Mint",
     description:
       "Preview your colors on real designs for a better visual understanding.",
-    url: "https://chromaforge.sarthakranjanhota.site/visualizer",
-    siteName: "ChromaForge",
+    url: "https://color-mint.sarthakranjanhota.site/visualizer",
+    siteName: "Color-Mint",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Palette Visualizer — ChromaForge",
+    title: "Palette Visualizer — Color-Mint",
     description:
       "Preview your colors on real designs for a better visual understanding.",
   },

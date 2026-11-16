@@ -4,18 +4,18 @@ export const metadata: Metadata = {
   title: "Gradient Studio",
   description: "Generate custom mesh, Voronoi, and Bézier gradients.",
   alternates: {
-    canonical: "https://chromaforge.sarthakranjanhota.site/gradients",
+    canonical: "https://color-mint.sarthakranjanhota.site/gradients",
   },
   openGraph: {
-    title: "Gradient Studio — ChromaForge",
+    title: "Gradient Studio — Color-Mint",
     description: "Generate custom mesh, Voronoi, and Bézier gradients.",
-    url: "https://chromaforge.sarthakranjanhota.site/gradients",
-    siteName: "ChromaForge",
+    url: "https://color-mint.sarthakranjanhota.site/gradients",
+    siteName: "Color-Mint",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gradient Studio — ChromaForge",
+    title: "Gradient Studio — Color-Mint",
     description: "Generate custom mesh, Voronoi, and Bézier gradients.",
   },
 };

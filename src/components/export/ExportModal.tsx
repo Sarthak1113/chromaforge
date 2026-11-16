@@ -30,7 +30,7 @@ export function ExportModal() {
 
   const shareableUrl = typeof window !== "undefined"
     ? `${window.location.origin}/palette/${slug}`
-    : `https://chromaforge.dev/palette/${slug}`;
+    : `https://color-mint.sarthakranjanhota.site/palette/${slug}`;
 
   let codeContent = "";
   switch (activeTab) {
@@ -61,7 +61,7 @@ export function ExportModal() {
   };
 
   const handleDownloadSvg = () => {
-    downloadSvgFile(palette, `chromaforge-${slug}.svg`);
+    downloadSvgFile(palette, `color-mint-${slug}.svg`);
   };
 
   return (

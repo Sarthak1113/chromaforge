@@ -166,10 +166,10 @@ export default function Home() {
       </div>
 
       {/* Semantic AEO & SEO Architecture for Search Engine Crawlers & Screen Readers */}
-      <section className="sr-only" aria-label="About ChromaForge Palette Generator">
-        <h1>ChromaForge: OKLCH Color Palette Generator &amp; Design System Suite</h1>
+      <section className="sr-only" aria-label="About Color-Mint Palette Generator">
+        <h1>Color-Mint: OKLCH Color Palette Generator &amp; Design System Suite</h1>
         <p>
-          ChromaForge is an advanced, client-side color engineering suite engineered in the OKLCH color space by Sarthak Ranjan Hota. Designed specifically for UI/UX designers, design system engineers, and frontend developers, ChromaForge delivers mathematically coherent color harmonies, real-time accessibility contrast matrices, procedural Bézier gradients, and ocular vision deficiency simulations.
+          Color-Mint is an advanced, client-side color engineering suite engineered in the OKLCH color space by Sarthak Ranjan Hota. Designed specifically for UI/UX designers, design system engineers, and frontend developers, Color-Mint delivers mathematically coherent color harmonies, real-time accessibility contrast matrices, procedural Bézier gradients, and ocular vision deficiency simulations.
         </p>
 
         <h2>Why OKLCH Color Space Outperforms Legacy sRGB and HSL</h2>
@@ -179,12 +179,12 @@ export default function Home() {
 
         <h2>Algorithmic Color Harmonies Supported</h2>
         <p>
-          ChromaForge calculates color relationships along the cylindrical OKLCH manifold across nine mathematical harmony models: Monochromatic for subtle tonal variation, Complementary for high-contrast pairs, Analogous for nature-inspired cohesion, Triadic and Tetradic for multi-hue systems, Split Complementary and Square for balanced complexity, Tonal ramps for design token scales, and Freeform procedural walks with minimum perceptual distance thresholds.
+          Color-Mint calculates color relationships along the cylindrical OKLCH manifold across nine mathematical harmony models: Monochromatic for subtle tonal variation, Complementary for high-contrast pairs, Analogous for nature-inspired cohesion, Triadic and Tetradic for multi-hue systems, Split Complementary and Square for balanced complexity, Tonal ramps for design token scales, and Freeform procedural walks with minimum perceptual distance thresholds.
         </p>
 
         <h2>Accessibility Compliance: WCAG 2.1 AAA and APCA Standards</h2>
         <p>
-          Accessible color design is central to ChromaForge. Our integrated tools evaluate relative luminance compliance against W3C Web Content Accessibility Guidelines (WCAG 2.1) Level AA (4.5 to 1 ratio) and Level AAA (7 to 1 ratio). Furthermore, ChromaForge integrates the Accessible Perceptual Contrast Algorithm (APCA), analyzing font weights, spatial frequencies, and display polarity to eliminate contrast false positives in dark mode and light mode interfaces. Built-in ocular simulation matrices enable real-time previews for Protanopia, Deuteranopia, Tritanopia, and Achromatopsia.
+          Accessible color design is central to Color-Mint. Our integrated tools evaluate relative luminance compliance against W3C Web Content Accessibility Guidelines (WCAG 2.1) Level AA (4.5 to 1 ratio) and Level AAA (7 to 1 ratio). Furthermore, Color-Mint integrates the Accessible Perceptual Contrast Algorithm (APCA), analyzing font weights, spatial frequencies, and display polarity to eliminate contrast false positives in dark mode and light mode interfaces. Built-in ocular simulation matrices enable real-time previews for Protanopia, Deuteranopia, Tritanopia, and Achromatopsia.
         </p>
 
         <h2>Keyboard Shortcuts &amp; Rapid Workflow</h2>
@@ -196,8 +196,8 @@ export default function Home() {
           <li>Press E to export palette tokens into Tailwind CSS v4, CSS Custom Properties, JSON, SVG, PNG, or Base62 shareable URLs.</li>
         </ul>
 
-        <nav aria-label="ChromaForge Internal Tools Directory">
-          <h2>ChromaForge Suite Navigation</h2>
+        <nav aria-label="Color-Mint Internal Tools Directory">
+          <h2>Color-Mint Suite Navigation</h2>
           <ul>
             <li><a href="/">Palette Generator Workspace</a></li>
             <li><a href="/contrast">WCAG and APCA Color Contrast Checker</a></li>

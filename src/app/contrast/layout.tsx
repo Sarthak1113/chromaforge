@@ -5,19 +5,19 @@ export const metadata: Metadata = {
   description:
     "Calculate the contrast ratio of text and background colors.",
   alternates: {
-    canonical: "https://chromaforge.sarthakranjanhota.site/contrast",
+    canonical: "https://color-mint.sarthakranjanhota.site/contrast",
   },
   openGraph: {
-    title: "Contrast Checker — ChromaForge",
+    title: "Contrast Checker — Color-Mint",
     description:
       "Calculate the contrast ratio of text and background colors.",
-    url: "https://chromaforge.sarthakranjanhota.site/contrast",
-    siteName: "ChromaForge",
+    url: "https://color-mint.sarthakranjanhota.site/contrast",
+    siteName: "Color-Mint",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contrast Checker — ChromaForge",
+    title: "Contrast Checker — Color-Mint",
     description:
       "Calculate the contrast ratio of text and background colors.",
   },

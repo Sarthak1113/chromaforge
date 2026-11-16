@@ -276,7 +276,7 @@ export default function ContrastPage() {
               Color Contrast & Accessibility Standards Guide
             </h2>
             <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-              ChromaForge calculates relative luminance and perceptual contrast strictly compliant with W3C Web Content Accessibility Guidelines (WCAG 2.1) and the modern Accessible Perceptual Contrast Algorithm (APCA).
+              Color-Mint calculates relative luminance and perceptual contrast strictly compliant with W3C Web Content Accessibility Guidelines (WCAG 2.1) and the modern Accessible Perceptual Contrast Algorithm (APCA).
             </p>
           </div>
 

@@ -13,7 +13,7 @@ const EXPLORE_FAQS = [
   {
     question: "How are the 240+ curated color palettes generated?",
     answer:
-      "Every curated palette in ChromaForge is mathematically balanced in the OKLCH color space. Our design team curated palettes across diverse aesthetic moods (such as Cyberpunk, Sunset, Pastel, Minimal, and Earthy) ensuring consistent perceptual brightness and WCAG-compliant contrast.",
+      "Every curated palette in Color-Mint is mathematically balanced in the OKLCH color space. Our design team curated palettes across diverse aesthetic moods (such as Cyberpunk, Sunset, Pastel, Minimal, and Earthy) ensuring consistent perceptual brightness and WCAG-compliant contrast.",
   },
   {
     question: "How can I search and filter palettes by mood or color?",
@@ -23,7 +23,7 @@ const EXPLORE_FAQS = [
   {
     question: "Can I edit or customize a curated palette in the generator?",
     answer:
-      "Yes! Clicking any curated palette card instantly loads its swatches into the ChromaForge Generator workspace. From there, you can lock your favorite swatches, randomize individual columns, adjust tints and shades, or test contrast in real time.",
+      "Yes! Clicking any curated palette card instantly loads its swatches into the Color-Mint Generator workspace. From there, you can lock your favorite swatches, randomize individual columns, adjust tints and shades, or test contrast in real time.",
   },
   {
     question: "What formats can I copy from the curated explore library?",

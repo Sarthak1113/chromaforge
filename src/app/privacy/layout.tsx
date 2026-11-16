@@ -3,23 +3,23 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "ChromaForge is 100% client-side. We do not track your data, store personal identifiers, or use tracking cookies. Read our privacy commitment.",
+    "Color-Mint is 100% client-side. We do not track your data, store personal identifiers, or use tracking cookies. Read our privacy commitment.",
   alternates: {
-    canonical: "https://chromaforge.sarthakranjanhota.site/privacy",
+    canonical: "https://color-mint.sarthakranjanhota.site/privacy",
   },
   openGraph: {
-    title: "Privacy Policy — ChromaForge",
+    title: "Privacy Policy — Color-Mint",
     description:
-      "ChromaForge is 100% client-side. We do not track your data, store personal identifiers, or use tracking cookies.",
-    url: "https://chromaforge.sarthakranjanhota.site/privacy",
-    siteName: "ChromaForge",
+      "Color-Mint is 100% client-side. We do not track your data, store personal identifiers, or use tracking cookies.",
+    url: "https://color-mint.sarthakranjanhota.site/privacy",
+    siteName: "Color-Mint",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Privacy Policy — ChromaForge",
+    title: "Privacy Policy — Color-Mint",
     description:
-      "ChromaForge is 100% client-side with zero tracking cookies and private in-browser computation.",
+      "Color-Mint is 100% client-side with zero tracking cookies and private in-browser computation.",
   },
 };
 

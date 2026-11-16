@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "ChromaForge — Perceptual Color Palette Generator & Design Suite";
+export const alt = "Color-Mint — Perceptual Color Palette Generator & Design Suite";
 export const size = {
   width: 1200,
   height: 630,
@@ -42,26 +42,26 @@ export default async function Image() {
                 width: "48px",
                 height: "48px",
                 borderRadius: "14px",
-                backgroundColor: "#4f46e5",
+                backgroundColor: "#059669",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontWeight: "900",
                 fontSize: "22px",
                 color: "#ffffff",
-                boxShadow: "0 8px 24px rgba(79, 70, 229, 0.4)",
+                boxShadow: "0 8px 24px rgba(5, 150, 105, 0.4)",
               }}
             >
-              CF
+              CM
             </div>
             <div style={{ fontSize: "28px", fontWeight: "800", letterSpacing: "-0.5px" }}>
-              ChromaForge
+              Color-Mint
             </div>
             <div
               style={{
-                backgroundColor: "rgba(99, 102, 241, 0.15)",
-                border: "1px solid rgba(99, 102, 241, 0.3)",
-                color: "#a5b4fc",
+                backgroundColor: "rgba(16, 185, 129, 0.15)",
+                border: "1px solid rgba(16, 185, 129, 0.3)",
+                color: "#6ee7b7",
                 padding: "4px 12px",
                 borderRadius: "9999px",
                 fontSize: "13px",
@@ -75,7 +75,7 @@ export default async function Image() {
           </div>
 
           <div style={{ color: "#a1a1aa", fontSize: "16px", fontWeight: "600" }}>
-            chromaforge.sarthakranjanhota.site
+            color-mint.sarthakranjanhota.site
           </div>
         </div>
 

@@ -55,7 +55,7 @@ export function exportAsSvg(colors: ColorItem[]): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">\n${rects}\n${texts}\n</svg>`;
 }
 
-export function downloadSvgFile(colors: ColorItem[], filename = "chromaforge-palette.svg"): void {
+export function downloadSvgFile(colors: ColorItem[], filename = "color-mint-palette.svg"): void {
   const svgContent = exportAsSvg(colors);
   const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
   const url = URL.createObjectURL(blob);

@@ -66,11 +66,11 @@ const GRADIENT_FAQS = [
   },
   {
     question: "How does Bézier interpolation preserve color saturation?",
-    answer: "Instead of cutting straight across the color space, ChromaForge curves the interpolation path along the high-chroma outer perimeter using Bézier mathematical splines and polar OKLCH coordinates. This maintains vivid chromatic intensity across midpoints without desaturation.",
+    answer: "Instead of cutting straight across the color space, Color-Mint curves the interpolation path along the high-chroma outer perimeter using Bézier mathematical splines and polar OKLCH coordinates. This maintains vivid chromatic intensity across midpoints without desaturation.",
   },
   {
     question: "Is OKLCH gradient syntax supported in all modern web browsers?",
-    answer: "Yes. CSS Color Module Level 4 syntax like linear-gradient(in oklch 90deg, ...) is supported across Chrome, Safari, Firefox, and Edge. For older browsers, ChromaForge automatically exports fallback hsla rules and vendor prefixes.",
+    answer: "Yes. CSS Color Module Level 4 syntax like linear-gradient(in oklch 90deg, ...) is supported across Chrome, Safari, Firefox, and Edge. For older browsers, Color-Mint automatically exports fallback hsla rules and vendor prefixes.",
   },
   {
     question: "How do I export and use multi-stop gradients in CSS?",
@@ -394,7 +394,7 @@ export default function GradientsPage() {
       });
 
       const a = document.createElement("a");
-      a.download = `chromaforge-${isAdvancedEnabled ? warpShape.toLowerCase().replace(/\s+/g, "-") : "gradient"}-${ratio.replace(":", "x")}.png`;
+      a.download = `color-mint-${isAdvancedEnabled ? warpShape.toLowerCase().replace(/\s+/g, "-") : "gradient"}-${ratio.replace(":", "x")}.png`;
       a.href = exportCanvas.toDataURL("image/png");
       a.click();
       setIsDownloading(false);
@@ -855,7 +855,7 @@ export default function GradientsPage() {
               Procedural Gradient Architecture & Color Science
             </h2>
             <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-              Standard digital gradients produce washed-out midpoints. ChromaForge solves this by combining OKLCH cylindrical space with non-linear Bézier and cellular noise fields.
+              Standard digital gradients produce washed-out midpoints. Color-Mint solves this by combining OKLCH cylindrical space with non-linear Bézier and cellular noise fields.
             </p>
           </div>
 

@@ -1,12 +1,12 @@
 # Product Requirements Document (PRD) & Technical Architecture
 
-**Project:** Next-Generation Color Palette & Design Utilities Platform (ChromaForge / ChromaFlow)
+**Project:** Next-Generation Color Palette & Design Utilities Platform (Color-Mint)
 
 **Target Audience:** Designers, Developers, Illustrators, and Digital Artists.
 
 ## 1. Brand Identity Concept
 
-**Primary Brand Name:** **ChromaForge** (ChromaFlow)
+**Primary Brand Name:** **Color-Mint**
 
 **Brand Mission:** To provide the most intuitive, lightning-fast, and comprehensive color utility platform that bridges the gap between raw inspiration and technical implementation—completely free and accessible to everyone instantly.
 

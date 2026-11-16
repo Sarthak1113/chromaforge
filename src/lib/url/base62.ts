@@ -1,5 +1,5 @@
 /**
- * Base62 URL Packing and Unpacking Engine for ChromaForge Palettes
+ * Base62 URL Packing and Unpacking Engine for Color-Mint Palettes
  * Enables zero-latency, stateless URL sharing without database calls.
  */
 

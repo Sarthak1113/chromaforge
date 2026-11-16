@@ -131,15 +131,15 @@ export function Navbar({ activePage = "generator" }: NavbarProps) {
       <div className="flex items-center space-x-3 sm:space-x-6">
         {/* Brand Anchor */}
         <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3.5 group">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform text-xs sm:text-sm">
-            CF
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center font-bold text-white shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform text-xs sm:text-sm">
+            CM
           </div>
           <div>
             <div className="flex items-center space-x-1.5 sm:space-x-2">
               <span className="text-sm font-bold text-zinc-100 tracking-tight group-hover:text-white transition-colors block">
-                ChromaForge
+                Color-Mint
               </span>
-              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-semibold border border-indigo-500/30">
+              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30">
                 OKLCH
               </span>
             </div>
@@ -332,12 +332,12 @@ export function Navbar({ activePage = "generator" }: NavbarProps) {
                     {/* Header */}
                     <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80">
                       <div className="flex items-center space-x-2.5">
-                        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-bold text-white text-xs shadow-md">
-                          CF
+                        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center font-bold text-white text-xs shadow-md">
+                          CM
                         </div>
                         <div>
                           <span className="font-bold text-sm text-zinc-100 block">
-                            ChromaForge
+                            Color-Mint
                           </span>
                           <span className="text-[10px] font-mono text-zinc-400">
                             OKLCH Studio
@@ -466,7 +466,7 @@ export function Navbar({ activePage = "generator" }: NavbarProps) {
                     </div>
 
                     <p className="text-center text-[10px] font-mono text-zinc-600">
-                      ChromaForge • OKLCH Perceptual Engine
+                      Color-Mint • OKLCH Perceptual Engine
                     </p>
                   </div>
                 </motion.div>

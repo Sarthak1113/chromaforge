@@ -43,15 +43,15 @@ export function Toolbar() {
     <header className="h-16 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md px-6 flex items-center justify-between z-30 select-none">
       {/* Brand logo & title - Consistent across all pages */}
       <Link href="/" className="flex items-center space-x-3.5 group">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-          CF
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center font-bold text-white shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform">
+          CM
         </div>
         <div>
           <div className="flex items-center space-x-2">
             <span className="text-sm font-bold text-zinc-100 tracking-tight group-hover:text-white transition-colors block">
-              ChromaForge
+              Color-Mint
             </span>
-            <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-semibold border border-indigo-500/30">
+            <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30">
               OKLCH v2
             </span>
           </div>

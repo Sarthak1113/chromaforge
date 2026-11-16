@@ -3,7 +3,7 @@ import "./globals.css";
 import { AppProviders } from "@/components/providers/JotaiProvider";
 import { JsonLd } from "@/components/common/JsonLd";
 
-const siteUrl = "https://chromaforge.sarthakranjanhota.site";
+const siteUrl = "https://color-mint.sarthakranjanhota.site";
 
 export const viewport: Viewport = {
   themeColor: "#09090b",
@@ -15,8 +15,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "ChromaForge — OKLCH Color Palette Generator",
-    template: "%s | ChromaForge",
+    default: "Color-Mint — Modern OKLCH Color Palette Generator",
+    template: "%s | Color-Mint",
   },
   description:
     "Generate harmonious OKLCH color palettes, verify WCAG & APCA contrast, and export procedural CSS gradients. Free, client-side, and lightning-fast.",
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
     "color blindness simulation",
     "UI color tokens",
     "accessible colors",
-    "ChromaForge",
+    "Color-Mint",
     "Sarthak Ranjan Hota",
   ],
   authors: [{ name: "Sarthak Ranjan Hota", url: "https://sarthakranjanhota.site" }],
   creator: "Sarthak Ranjan Hota",
-  publisher: "ChromaForge",
+  publisher: "Color-Mint",
   formatDetection: {
     email: false,
     address: false,
@@ -56,17 +56,17 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   openGraph: {
-    title: "ChromaForge — OKLCH Color Palette Generator",
+    title: "Color-Mint — Modern OKLCH Color Palette Generator",
     description:
       "Generate harmonious OKLCH color palettes, verify WCAG & APCA contrast, and export procedural CSS gradients. Free, client-side, and lightning-fast.",
     url: siteUrl,
-    siteName: "ChromaForge",
+    siteName: "Color-Mint",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChromaForge — OKLCH Color Palette Generator",
+    title: "Color-Mint — Modern OKLCH Color Palette Generator",
     description:
       "Generate harmonious OKLCH color palettes, test WCAG/APCA contrast, and export procedural Bézier gradients in real-time.",
     creator: "@sarthak",

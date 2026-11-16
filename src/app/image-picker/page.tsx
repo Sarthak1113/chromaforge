@@ -14,9 +14,9 @@ import { motion } from "framer-motion";
 
 const IMAGE_PICKER_FAQS = [
   {
-    question: "How does ChromaForge extract dominant colors from photos?",
+    question: "How does Color-Mint extract dominant colors from photos?",
     answer:
-      "When you drop an image, ChromaForge downsamples the bitmap onto an off-screen HTML5 Canvas and clusters pixel frequencies. It filters out near-black, near-white, and low-saturation noise, then maps the most prominent color clusters into the OKLCH color space to ensure perceptual harmony and balanced contrast.",
+      "When you drop an image, Color-Mint downsamples the bitmap onto an off-screen HTML5 Canvas and clusters pixel frequencies. It filters out near-black, near-white, and low-saturation noise, then maps the most prominent color clusters into the OKLCH color space to ensure perceptual harmony and balanced contrast.",
   },
   {
     question: "Are my uploaded images uploaded or stored on any external server?",
@@ -26,12 +26,12 @@ const IMAGE_PICKER_FAQS = [
   {
     question: "What image file formats are supported?",
     answer:
-      "ChromaForge supports all web standard image formats including PNG, JPEG, JPG, WEBP, AVIF, and SVG. There is no file size limit because processing is handled directly by your device's graphics processor.",
+      "Color-Mint supports all web standard image formats including PNG, JPEG, JPG, WEBP, AVIF, and SVG. There is no file size limit because processing is handled directly by your device's graphics processor.",
   },
   {
     question: "How can I use the extracted colors in the palette generator?",
     answer:
-      "After sampling your image, click 'Open in Generator'. ChromaForge transfers your extracted swatches directly into the interactive generator workspace, where you can lock colors, generate complementary tones, test contrast, and export tokens.",
+      "After sampling your image, click 'Open in Generator'. Color-Mint transfers your extracted swatches directly into the interactive generator workspace, where you can lock colors, generate complementary tones, test contrast, and export tokens.",
   },
 ];
 

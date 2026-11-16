@@ -1,12 +1,12 @@
 import React from "react";
 
 export function JsonLd() {
-  const baseUrl = "https://chromaforge.sarthakranjanhota.site";
+  const baseUrl = "https://color-mint.sarthakranjanhota.site";
 
   const softwareAppSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "ChromaForge",
+    name: "Color-Mint",
     url: baseUrl,
     applicationCategory: "DesignApplication",
     operatingSystem: "All (Web Browser)",
@@ -49,10 +49,10 @@ export function JsonLd() {
       },
       {
         "@type": "Question",
-        name: "How does ChromaForge evaluate WCAG 2.1 and APCA color contrast?",
+        name: "How does Color-Mint evaluate WCAG 2.1 and APCA color contrast?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "ChromaForge computes relative luminance ratios in real-time according to WCAG 2.1 Level AA (minimum 4.5:1 for body copy, 3:1 for large text) and Level AAA (7:1 for body text). It also calculates modern APCA (Accessible Perceptual Contrast Algorithm) metrics, evaluating font weight, spatial frequency, and polarity to prevent accessibility false positives.",
+          text: "Color-Mint computes relative luminance ratios in real-time according to WCAG 2.1 Level AA (minimum 4.5:1 for body copy, 3:1 for large text) and Level AAA (7:1 for body text). It also calculates modern APCA (Accessible Perceptual Contrast Algorithm) metrics, evaluating font weight, spatial frequency, and polarity to prevent accessibility false positives.",
         },
       },
       {
@@ -60,15 +60,15 @@ export function JsonLd() {
         name: "Why do standard CSS gradients look muddy and gray in the middle?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Standard CSS linear gradients interpolate across sRGB, cutting straight through the desaturated center of the color cube. This creates a washed-out 'gray dead zone' between opposing hues. ChromaForge prevents this by calculating transitions along curved Bézier paths in OKLCH space, preserving chroma across the midpoint and exporting production-ready cross-browser CSS.",
+          text: "Standard CSS linear gradients interpolate across sRGB, cutting straight through the desaturated center of the color cube. This creates a washed-out 'gray dead zone' between opposing hues. Color-Mint prevents this by calculating transitions along curved Bézier paths in OKLCH space, preserving chroma across the midpoint and exporting production-ready cross-browser CSS.",
         },
       },
       {
         "@type": "Question",
-        name: "Can I simulate color blindness for UI design systems in ChromaForge?",
+        name: "Can I simulate color blindness for UI design systems in Color-Mint?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. ChromaForge features built-in ocular cone deficiency simulation matrices for Protanopia (red-blind), Deuteranopia (green-blind), Tritanopia (blue-blind), and Achromatopsia (monochrome), enabling frontend developers and product designers to verify token legibility before shipping.",
+          text: "Yes. Color-Mint features built-in ocular cone deficiency simulation matrices for Protanopia (red-blind), Deuteranopia (green-blind), Tritanopia (blue-blind), and Achromatopsia (monochrome), enabling frontend developers and product designers to verify token legibility before shipping.",
         },
       },
     ],
@@ -77,7 +77,7 @@ export function JsonLd() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "ChromaForge",
+    name: "Color-Mint",
     url: baseUrl,
     description: "Perceptual Color Palette Generator & Design Suite",
     author: {
