@@ -2,8 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { Sparkles, ArrowRight, Compass } from "lucide-react";
 import { motion } from "framer-motion";
+import UseAnimations from "react-useanimations";
+import zap from "react-useanimations/lib/zap";
+import arrowRightAnim from "react-useanimations/lib/arrowRight";
+import explore from "react-useanimations/lib/explore";
 
 export function CtaBannerSection() {
   const scrollToTop = () => {
@@ -11,7 +14,7 @@ export function CtaBannerSection() {
   };
 
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 border-t border-zinc-800/80 select-none">
+    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -25,7 +28,7 @@ export function CtaBannerSection() {
 
           {/* Eyebrow */}
           <div className="relative group inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider transition-colors hover:bg-emerald-500/20">
-            <Sparkles className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
+            <UseAnimations animation={zap} size={16} strokeColor="#34d399" autoplay loop />
             <span>Ready in Seconds • Zero Signup Required</span>
           </div>
 
@@ -50,14 +53,14 @@ export function CtaBannerSection() {
               className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-sm shadow-xl shadow-emerald-600/30 transition-all cursor-pointer"
             >
               <span>Launch Color-Mint Workspace</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <UseAnimations animation={arrowRightAnim} size={18} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
             </button>
 
             <Link
               href="/explore"
               className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-bold text-sm transition-all cursor-pointer"
             >
-              <Compass className="w-4 h-4 text-emerald-400 transition-transform duration-300 group-hover:rotate-45" />
+              <UseAnimations animation={explore} size={18} strokeColor="#34d399" />
               <span>Explore Curated Schemes</span>
             </Link>
           </div>

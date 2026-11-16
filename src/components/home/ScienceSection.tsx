@@ -2,12 +2,18 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, AlertTriangle, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import UseAnimations from "react-useanimations";
+import activity from "react-useanimations/lib/activity";
+import alertTriangle from "react-useanimations/lib/alertTriangle";
+import zap from "react-useanimations/lib/zap";
+import checkmark from "react-useanimations/lib/checkmark";
+import arrowRightAnim from "react-useanimations/lib/arrowRight";
 
 export function ScienceSection() {
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 border-t border-zinc-800/80 select-none">
+    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
       <div className="max-w-6xl mx-auto space-y-16">
         {/* Header */}
         <motion.div
@@ -18,7 +24,7 @@ export function ScienceSection() {
           className="text-center max-w-3xl mx-auto space-y-5"
         >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse text-emerald-400" />
+            <UseAnimations animation={activity} size={16} strokeColor="#34d399" autoplay loop />
             <span>The Color Science Upgrade</span>
           </div>
 
@@ -45,8 +51,8 @@ export function ScienceSection() {
           {/* Card 1: HSL Illusion */}
           <div className="group p-7 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between space-y-6 hover:border-amber-500/40 hover:bg-zinc-900/80 transition-all duration-300">
             <div className="space-y-4">
-              <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 shadow-sm">
-                <AlertTriangle className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-sm">
+                <UseAnimations animation={alertTriangle} size={26} strokeColor="#fbbf24" autoplay loop />
               </div>
               <h3 className="text-lg font-bold text-zinc-100 group-hover:text-amber-300 transition-colors">
                 The HSL Fallacy
@@ -76,8 +82,8 @@ export function ScienceSection() {
           {/* Card 2: The OKLCH Standard */}
           <div className="group p-7 rounded-3xl bg-gradient-to-b from-zinc-900/90 to-zinc-900/40 border border-emerald-500/30 flex flex-col justify-between space-y-6 shadow-xl shadow-emerald-500/5 hover:border-emerald-500/60 hover:bg-zinc-900/90 transition-all duration-300">
             <div className="space-y-4">
-              <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm shadow-emerald-500/10">
-                <Sparkles className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-sm shadow-emerald-500/10">
+                <UseAnimations animation={zap} size={26} strokeColor="#34d399" autoplay loop />
               </div>
               <h3 className="text-lg font-bold text-zinc-100 flex items-center space-x-2 group-hover:text-emerald-300 transition-colors">
                 <span>The OKLCH Standard</span>
@@ -116,8 +122,8 @@ export function ScienceSection() {
           {/* Card 3: Native CSS Support */}
           <div className="group p-7 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between space-y-6 hover:border-cyan-500/40 hover:bg-zinc-900/80 transition-all duration-300">
             <div className="space-y-4">
-              <div className="w-11 h-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
-                <CheckCircle2 className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-sm">
+                <UseAnimations animation={checkmark} size={26} strokeColor="#22d3ee" autoplay loop />
               </div>
               <h3 className="text-lg font-bold text-zinc-100 group-hover:text-cyan-300 transition-colors">
                 Native CSS Support
@@ -152,7 +158,7 @@ export function ScienceSection() {
             className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition-all cursor-pointer whitespace-nowrap group"
           >
             <span>Test Contrast with APCA</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            <UseAnimations animation={arrowRightAnim} size={16} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
       </div>

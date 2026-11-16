@@ -4,8 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { useAtomValue } from "jotai";
 import { paletteAtom } from "@/atoms/palette.atoms";
-import { ArrowRight, CheckCircle2, TrendingUp, Layout } from "lucide-react";
 import { motion } from "framer-motion";
+import UseAnimations from "react-useanimations";
+import layout from "react-useanimations/lib/layout";
+import trendingUp from "react-useanimations/lib/trendingUp";
+import checkmark from "react-useanimations/lib/checkmark";
+import arrowRightAnim from "react-useanimations/lib/arrowRight";
 
 export function VisualizerShowcaseSection() {
   const palette = useAtomValue(paletteAtom);
@@ -16,7 +20,7 @@ export function VisualizerShowcaseSection() {
   const c3 = palette[2]?.hex || "#6366f1";
 
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 border-t border-zinc-800/80 select-none">
+    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
       <div className="max-w-6xl mx-auto space-y-16">
         {/* Section Header */}
         <motion.div
@@ -27,7 +31,7 @@ export function VisualizerShowcaseSection() {
           className="text-center max-w-3xl mx-auto space-y-5"
         >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-semibold uppercase tracking-wider shadow-sm">
-            <Layout className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+            <UseAnimations animation={layout} size={16} strokeColor="#22d3ee" autoplay loop />
             <span>Contextual Design Previews</span>
           </div>
 
@@ -98,7 +102,7 @@ export function VisualizerShowcaseSection() {
             <div className="group p-6 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-3 hover:border-zinc-700 transition-colors">
               <div className="flex items-center justify-between text-xs text-zinc-400">
                 <span>Active Designers</span>
-                <TrendingUp className="w-4 h-4 text-zinc-400 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                <UseAnimations animation={trendingUp} size={18} strokeColor="#22d3ee" autoplay loop />
               </div>
               <div className="text-2xl sm:text-3xl font-black text-zinc-100">14,920</div>
               <div className="flex items-center space-x-2 text-xs">
@@ -141,15 +145,15 @@ export function VisualizerShowcaseSection() {
           {/* Bottom Features Strip */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 text-xs text-zinc-400 border-t border-zinc-800/60">
             <div className="flex items-center space-x-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <UseAnimations animation={checkmark} size={16} strokeColor="#34d399" autoplay loop />
               <span>Full dark &amp; light theme stress testing</span>
             </div>
             <div className="flex items-center space-x-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <UseAnimations animation={checkmark} size={16} strokeColor="#34d399" autoplay loop />
               <span>Ocular deficiency simulations (Protanopia / Tritanopia)</span>
             </div>
             <div className="flex items-center space-x-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <UseAnimations animation={checkmark} size={16} strokeColor="#34d399" autoplay loop />
               <span>5 viewports: SaaS, Mobile, Branding, Pattern, Typography</span>
             </div>
           </div>
@@ -168,7 +172,7 @@ export function VisualizerShowcaseSection() {
             className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-600/25 transition-all cursor-pointer group"
           >
             <span>Try Interactive Visualizer on Full Screens</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <UseAnimations animation={arrowRightAnim} size={16} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
       </div>

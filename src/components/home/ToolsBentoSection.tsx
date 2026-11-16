@@ -2,21 +2,20 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  CheckCircle2,
-  Layers,
-  Eye,
-  Image as ImageIcon,
-  Compass,
-  ArrowRight,
-  ShieldCheck,
-  Zap,
-} from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import UseAnimations from "react-useanimations";
+import zap from "react-useanimations/lib/zap";
+import shield from "react-useanimations/lib/shield";
+import activity from "react-useanimations/lib/activity";
+import layout from "react-useanimations/lib/layout";
+import imageAnim from "react-useanimations/lib/image";
+import explore from "react-useanimations/lib/explore";
+import arrowRightAnim from "react-useanimations/lib/arrowRight";
 
 export function ToolsBentoSection() {
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 border-t border-zinc-800/80 select-none">
+    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
       <div className="max-w-6xl mx-auto space-y-16">
         {/* Section Header */}
         <motion.div
@@ -27,7 +26,7 @@ export function ToolsBentoSection() {
           className="text-center max-w-3xl mx-auto space-y-5"
         >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs font-mono font-semibold uppercase tracking-wider shadow-sm">
-            <Zap className="w-3.5 h-3.5 text-teal-400 animate-pulse" />
+            <UseAnimations animation={zap} size={16} strokeColor="#2dd4bf" autoplay loop />
             <span>The Color-Mint Utility Suite</span>
           </div>
 
@@ -55,8 +54,8 @@ export function ToolsBentoSection() {
           <div className="group md:col-span-7 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 p-7 sm:p-9 flex flex-col justify-between space-y-7 hover:border-indigo-500/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-lg">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
-                  <CheckCircle2 className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shadow-sm">
+                  <UseAnimations animation={shield} size={26} strokeColor="#818cf8" autoplay loop />
                 </div>
                 <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30">
                   WCAG AAA &amp; APCA
@@ -91,7 +90,7 @@ export function ToolsBentoSection() {
                 className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-semibold border border-zinc-700/80 transition-all hover:text-white cursor-pointer group/btn"
               >
                 <span>Launch Checker</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#ffffff" className="group-hover/btn:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
@@ -100,8 +99,8 @@ export function ToolsBentoSection() {
           <div className="group md:col-span-5 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 p-7 sm:p-9 flex flex-col justify-between space-y-7 hover:border-teal-500/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-lg">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
-                  <Layers className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-sm">
+                  <UseAnimations animation={activity} size={26} strokeColor="#2dd4bf" autoplay loop />
                 </div>
                 <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-teal-500/20 text-teal-400 font-semibold border border-teal-500/30">
                   in oklch
@@ -132,7 +131,7 @@ export function ToolsBentoSection() {
                   className="flex items-center space-x-1.5 text-xs font-semibold text-teal-400 hover:text-teal-300 transition-colors group/link"
                 >
                   <span>Open Studio</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                  <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#2dd4bf" className="group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
@@ -142,8 +141,8 @@ export function ToolsBentoSection() {
           <div className="group md:col-span-5 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 p-7 sm:p-9 flex flex-col justify-between space-y-7 hover:border-cyan-500/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-lg">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
-                  <Eye className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-sm">
+                  <UseAnimations animation={layout} size={26} strokeColor="#22d3ee" autoplay loop />
                 </div>
                 <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-400 font-semibold border border-cyan-500/30">
                   Live UI Mockups
@@ -169,7 +168,7 @@ export function ToolsBentoSection() {
               className="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-950 border border-zinc-800/80 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all group/btn"
             >
               <span>Test on Live UI Mockups</span>
-              <ArrowRight className="w-3.5 h-3.5 text-cyan-400 group-hover/btn:translate-x-1 transition-transform" />
+              <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#22d3ee" className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
           </div>
 
@@ -177,8 +176,8 @@ export function ToolsBentoSection() {
           <div className="group md:col-span-4 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 p-7 sm:p-9 flex flex-col justify-between space-y-7 hover:border-emerald-500/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-lg">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
-                  <ImageIcon className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-sm">
+                  <UseAnimations animation={imageAnim} size={26} strokeColor="#34d399" autoplay loop />
                 </div>
                 <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30">
                   Auto-Cluster
@@ -204,7 +203,7 @@ export function ToolsBentoSection() {
               className="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-950 border border-zinc-800/80 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all group/btn"
             >
               <span>Extract Image Swatches</span>
-              <ArrowRight className="w-3.5 h-3.5 text-emerald-400 group-hover/btn:translate-x-1 transition-transform" />
+              <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#34d399" className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
           </div>
 
@@ -212,8 +211,8 @@ export function ToolsBentoSection() {
           <div className="group md:col-span-3 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 p-7 sm:p-9 flex flex-col justify-between space-y-7 hover:border-purple-500/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-lg">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
-                  <Compass className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-sm">
+                  <UseAnimations animation={explore} size={26} strokeColor="#c084fc" autoplay loop />
                 </div>
                 <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-400 font-semibold border border-purple-500/30">
                   240+ Themes
@@ -239,7 +238,7 @@ export function ToolsBentoSection() {
               className="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-950 border border-zinc-800/80 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all group/btn"
             >
               <span>Browse 240+</span>
-              <ArrowRight className="w-3.5 h-3.5 text-purple-400 group-hover/btn:translate-x-1 transition-transform" />
+              <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#c084fc" className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
           </div>
         </motion.div>

@@ -10,8 +10,12 @@ import {
   exportAsJson,
 } from "@/lib/export/exporters";
 import { paletteToSlug } from "@/lib/url/base62";
-import { Code2, Copy, Check, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import UseAnimations from "react-useanimations";
+import code from "react-useanimations/lib/code";
+import copyAnim from "react-useanimations/lib/copy";
+import checkmark from "react-useanimations/lib/checkmark";
+import arrowRightAnim from "react-useanimations/lib/arrowRight";
 
 type CodeTab = "tailwind" | "css" | "json" | "url";
 
@@ -46,7 +50,7 @@ export function DeveloperHandoffSection() {
   };
 
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 border-t border-zinc-800/80 select-none">
+    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
       <div className="max-w-6xl mx-auto space-y-16">
         {/* Section Header */}
         <motion.div
@@ -57,7 +61,7 @@ export function DeveloperHandoffSection() {
           className="text-center max-w-3xl mx-auto space-y-5"
         >
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider shadow-sm">
-            <Code2 className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+            <UseAnimations animation={code} size={16} strokeColor="#34d399" autoplay loop />
             <span>Developer-First Handoff</span>
           </div>
 
@@ -151,12 +155,12 @@ export function DeveloperHandoffSection() {
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <UseAnimations animation={checkmark} size={15} strokeColor="#34d399" autoplay />
                   <span className="text-emerald-400 font-bold">Copied!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-zinc-400 group-hover:scale-110 transition-transform" />
+                  <UseAnimations animation={copyAnim} size={15} strokeColor="#a1a1aa" interaction="hover-replay" />
                   <span>Copy Code</span>
                 </>
               )}
@@ -182,7 +186,7 @@ export function DeveloperHandoffSection() {
             className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/25 transition-all cursor-pointer group"
           >
             <span>Open Generator &amp; Export All Tokens</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <UseAnimations animation={arrowRightAnim} size={16} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
       </div>

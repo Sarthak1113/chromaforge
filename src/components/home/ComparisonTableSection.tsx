@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
-import { Check, X, Sparkles, Scale, Zap } from "lucide-react";
+import { X } from "lucide-react";
 import { motion } from "framer-motion";
+import UseAnimations from "react-useanimations";
+import activity from "react-useanimations/lib/activity";
+import checkmark from "react-useanimations/lib/checkmark";
 
 const COMPARISONS = [
   {
@@ -51,7 +54,7 @@ const COMPARISONS = [
 
 export function ComparisonTableSection() {
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 border-t border-zinc-800/80 select-none">
+    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
       <div className="max-w-5xl mx-auto space-y-16">
         {/* Section Header */}
         <motion.div
@@ -62,7 +65,7 @@ export function ComparisonTableSection() {
           className="text-center max-w-3xl mx-auto space-y-4"
         >
           <div className="group inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs font-mono font-semibold uppercase tracking-wider transition-colors hover:bg-teal-500/20">
-            <Scale className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
+            <UseAnimations animation={activity} size={16} strokeColor="#2dd4bf" autoplay loop />
             <span>The Head-to-Head Comparison</span>
           </div>
 
@@ -97,7 +100,7 @@ export function ComparisonTableSection() {
               {/* Color-Mint Advantage (Highlighted) */}
               <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-start space-x-2.5 text-xs text-emerald-200">
                 <div className="p-0.5 rounded-full bg-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
-                  <Check className="w-3.5 h-3.5" />
+                  <UseAnimations animation={checkmark} size={14} strokeColor="#34d399" autoplay loop />
                 </div>
                 <div>
                   <span className="font-semibold text-emerald-400 block text-[11px] uppercase tracking-wider font-mono">
@@ -161,7 +164,7 @@ export function ComparisonTableSection() {
                   <td className="p-5 text-zinc-100 bg-emerald-950/10 font-medium">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center space-x-2">
-                        <Check className="w-4 h-4 text-emerald-400 shrink-0 font-bold transition-transform group-hover:scale-110" />
+                        <UseAnimations animation={checkmark} size={16} strokeColor="#34d399" autoplay loop />
                         <span>{row.colormint}</span>
                       </div>
                       <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30 shrink-0">
