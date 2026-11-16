@@ -33,6 +33,7 @@ import {
 } from "@/atoms/palette.atoms";
 import { downloadSvgFile } from "@/lib/export/exporters";
 import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -156,6 +157,10 @@ export default function VisualizerPage() {
         {/* Collapsible Frequently Asked Questions (AEO & SEO) */}
         <CollapsibleFaq items={VISUALIZER_FAQS} />
       </motion.main>
+
+      <div className="pb-20 sm:pb-16">
+        <Footer />
+      </div>
 
       {/* Sticky Bottom Active Palette Bar */}
       <div className="sticky bottom-0 left-0 right-0 z-30 border-t border-zinc-800/90 bg-zinc-950/95 backdrop-blur-xl px-4 sm:px-6 py-2.5 sm:py-3 shadow-2xl pb-[calc(0.75rem+env(safe-area-inset-bottom))]">

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ShieldCheck, Lock, EyeOff, ServerOff, Database, ArrowLeft } from "lucide-react";
 import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { motion } from "framer-motion";
 
 export default function PrivacyPage() {
@@ -113,10 +114,10 @@ export default function PrivacyPage() {
             <p className="text-zinc-400">
               Color-Mint was engineered and designed by{" "}
               <a
-                href="https://sarthakranjanhota.site"
+                href="https://www.sarthakranjanhota.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-400 hover:underline font-semibold"
+                className="text-emerald-400 hover:underline font-semibold"
               >
                 Sarthak Ranjan Hota
               </a>
@@ -124,32 +125,9 @@ export default function PrivacyPage() {
             </p>
           </div>
         </section>
-
-        {/* Internal Directory Footer */}
-        <footer className="pt-8 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-500">
-          <div className="flex flex-wrap items-center gap-4">
-            <Link href="/" className="hover:text-zinc-300 transition-colors">
-              Palette Generator
-            </Link>
-            <Link href="/contrast" className="hover:text-zinc-300 transition-colors">
-              Contrast Checker
-            </Link>
-            <Link href="/gradients" className="hover:text-zinc-300 transition-colors">
-              Gradient Studio
-            </Link>
-            <Link href="/visualizer" className="hover:text-zinc-300 transition-colors">
-              UI Visualizer
-            </Link>
-            <Link href="/image-picker" className="hover:text-zinc-300 transition-colors">
-              Image Extractor
-            </Link>
-            <Link href="/explore" className="hover:text-zinc-300 transition-colors">
-              Curated Palettes
-            </Link>
-          </div>
-          <div>© {new Date().getFullYear()} Color-Mint. All rights reserved.</div>
-        </footer>
       </motion.main>
+
+      <Footer />
     </div>
   );
 }

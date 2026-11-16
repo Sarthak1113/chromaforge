@@ -9,6 +9,7 @@ import { rgbToOklch } from "@/lib/colors/oklch";
 import { getNearestColorName } from "@/lib/colors/names";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
 import { motion } from "framer-motion";
 
@@ -280,6 +281,8 @@ export default function ImagePickerPage() {
         {/* Collapsible Frequently Asked Questions (AEO & SEO) */}
         <CollapsibleFaq items={IMAGE_PICKER_FAQS} />
       </motion.main>
+
+      <Footer />
     </div>
   );
 }

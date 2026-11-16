@@ -20,6 +20,7 @@ import {
   isThemeSettingsSheetOpenAtom,
 } from "@/atoms/ui.atoms";
 import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { WorkspaceToolbar } from "@/components/generator/WorkspaceToolbar";
 import { PaletteBoard } from "@/components/generator/PaletteBoard";
 import { ShadesModal } from "@/components/generator/ShadesModal";
@@ -139,31 +140,35 @@ export default function Home() {
   ]);
 
   return (
-    <main className="relative flex flex-col w-screen h-screen bg-zinc-950 select-none overflow-hidden">
-      <Navbar activePage="generator" />
-      <WorkspaceToolbar />
-      <PaletteBoard />
+    <main className="relative flex flex-col w-screen min-h-screen bg-zinc-950 select-none overflow-x-hidden">
+      <div className="flex flex-col h-screen w-full relative shrink-0">
+        <Navbar activePage="generator" />
+        <WorkspaceToolbar />
+        <PaletteBoard />
 
-      {/* Mobile Floating Action Bar (Generate + Tune) */}
-      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 select-none">
-        <button
-          onClick={() => generatePalette()}
-          className="flex items-center space-x-2 px-5 py-3 rounded-full bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-bold text-xs shadow-2xl shadow-indigo-600/50 border border-indigo-400/30 transition-all cursor-pointer"
-          title="Generate New Palette"
-        >
-          <Sparkles className="w-4 h-4" />
-          <span>Generate</span>
-        </button>
+        {/* Mobile Floating Action Bar (Generate + Tune) */}
+        <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 select-none">
+          <button
+            onClick={() => generatePalette()}
+            className="flex items-center space-x-2 px-5 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-2xl shadow-emerald-600/50 border border-emerald-400/30 transition-all cursor-pointer"
+            title="Generate New Palette"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>Generate</span>
+          </button>
 
-        <button
-          onClick={() => setIsThemeSettingsOpen(true)}
-          className="flex items-center space-x-1.5 px-4 py-3 rounded-full bg-zinc-900/95 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-semibold text-xs shadow-xl backdrop-blur-xl transition-all cursor-pointer"
-          title="Theme & Engine Settings"
-        >
-          <SlidersHorizontal className="w-3.5 h-3.5 text-indigo-400" />
-          <span>Tune</span>
-        </button>
+          <button
+            onClick={() => setIsThemeSettingsOpen(true)}
+            className="flex items-center space-x-1.5 px-4 py-3 rounded-full bg-zinc-900/95 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-semibold text-xs shadow-xl backdrop-blur-xl transition-all cursor-pointer"
+            title="Theme & Engine Settings"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Tune</span>
+          </button>
+        </div>
       </div>
+
+      <Footer />
 
       {/* Semantic AEO & SEO Architecture for Search Engine Crawlers & Screen Readers */}
       <section className="sr-only" aria-label="About Color-Mint Palette Generator">

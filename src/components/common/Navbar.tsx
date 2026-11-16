@@ -456,7 +456,7 @@ export function Navbar({ activePage = "generator" }: NavbarProps) {
                       </Link>
                       <span>•</span>
                       <a
-                        href="https://sarthakranjanhota.site"
+                        href="https://www.sarthakranjanhota.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-zinc-300 transition-colors"

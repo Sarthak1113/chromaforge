@@ -6,6 +6,7 @@ import { Search, Copy, Check, ChevronLeft, ChevronRight, Compass } from "lucide-
 import { paletteToSlug } from "@/lib/url/base62";
 import { ALL_CURATED_PALETTES, CuratedPalette } from "@/lib/colors/presets";
 import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
 import { motion } from "framer-motion";
 
@@ -265,6 +266,8 @@ export default function ExplorePage() {
         {/* Collapsible Frequently Asked Questions (AEO & SEO) */}
         <CollapsibleFaq items={EXPLORE_FAQS} className="mt-12" />
       </motion.main>
+
+      <Footer />
     </div>
   );
 }

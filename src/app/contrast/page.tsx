@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ArrowRightLeft, CheckCircle2, Star } from "lucide-react";
 import { getContrastRatio } from "@/lib/colors/contrast";
 import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
 import { motion } from "framer-motion";
 
@@ -324,6 +325,8 @@ export default function ContrastPage() {
         {/* Collapsible Frequently Asked Questions (AEO & SEO) */}
         <CollapsibleFaq items={CONTRAST_FAQS} />
       </motion.main>
+
+      <Footer />
     </div>
   );
 }

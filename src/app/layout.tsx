@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "Color-Mint",
     "Sarthak Ranjan Hota",
   ],
-  authors: [{ name: "Sarthak Ranjan Hota", url: "https://sarthakranjanhota.site" }],
+  authors: [{ name: "Sarthak Ranjan Hota", url: "https://www.sarthakranjanhota.com" }],
   creator: "Sarthak Ranjan Hota",
   publisher: "Color-Mint",
   formatDetection: {

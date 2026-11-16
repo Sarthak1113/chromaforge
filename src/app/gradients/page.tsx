@@ -16,6 +16,7 @@ import {
 import { generateRandomOklch } from "@/lib/colors/harmonies";
 import { oklchToHex, rgbToHsl } from "@/lib/colors/oklch";
 import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -901,6 +902,8 @@ export default function GradientsPage() {
         {/* Collapsible Frequently Asked Questions (AEO & SEO) */}
         <CollapsibleFaq items={GRADIENT_FAQS} />
       </motion.main>
+
+      <Footer />
 
       {/* Gradient CSS Popup Modal */}
       {mounted &&
