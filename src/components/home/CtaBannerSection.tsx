@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Sparkles, ArrowRight, Compass } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function CtaBannerSection() {
   const scrollToTop = () => {
@@ -10,15 +11,21 @@ export function CtaBannerSection() {
   };
 
   return (
-    <section className="w-full bg-zinc-950 py-20 px-6 border-t border-zinc-800/80 select-none">
+    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 border-t border-zinc-800/80 select-none">
       <div className="max-w-5xl mx-auto">
-        <div className="relative rounded-3xl bg-gradient-to-tr from-zinc-900 via-zinc-900/90 to-zinc-950 border border-emerald-500/30 p-8 sm:p-14 overflow-hidden shadow-2xl text-center space-y-8">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="relative rounded-3xl bg-gradient-to-tr from-zinc-900 via-zinc-900/90 to-zinc-950 border border-emerald-500/30 p-8 sm:p-14 overflow-hidden shadow-2xl text-center space-y-8"
+        >
           {/* Subtle Ambient Glow */}
           <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
 
           {/* Eyebrow */}
-          <div className="relative inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="relative group inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider transition-colors hover:bg-emerald-500/20">
+            <Sparkles className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
             <span>Ready in Seconds • Zero Signup Required</span>
           </div>
 
@@ -40,17 +47,17 @@ export function CtaBannerSection() {
             <button
               type="button"
               onClick={scrollToTop}
-              className="w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-sm shadow-xl shadow-emerald-600/30 transition-all cursor-pointer"
+              className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-sm shadow-xl shadow-emerald-600/30 transition-all cursor-pointer"
             >
               <span>Launch Color-Mint Workspace</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
 
             <Link
               href="/explore"
-              className="w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-bold text-sm transition-all cursor-pointer"
+              className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-bold text-sm transition-all cursor-pointer"
             >
-              <Compass className="w-4 h-4 text-emerald-400" />
+              <Compass className="w-4 h-4 text-emerald-400 transition-transform duration-300 group-hover:rotate-45" />
               <span>Explore Curated Schemes</span>
             </Link>
           </div>
@@ -59,7 +66,7 @@ export function CtaBannerSection() {
           <div className="relative text-xs text-zinc-500 pt-2">
             Free forever • Crafted with precision by Sarthak Ranjan Hota
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
