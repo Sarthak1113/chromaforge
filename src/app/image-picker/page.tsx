@@ -126,10 +126,10 @@ export default function ImagePickerPage() {
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-3">
               <ImageIcon className="w-8 h-8 text-indigo-400 shrink-0" />
-              <span>OKLCH Dominant Color Palette Extractor from Image</span>
+              <span>Image Extractor</span>
             </h1>
             <p className="text-sm sm:text-base text-zinc-400">
-              Sample and extract dominant harmonic palettes from photos.
+              Extract beautiful palettes from your photos.
             </p>
           </div>
 

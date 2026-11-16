@@ -34,7 +34,7 @@ interface NavbarProps {
 
 const TOOLS_ITEMS = [
   {
-    name: "UI Visualizer",
+    name: "Palette Visualizer",
     description: "Preview palettes on mock apps & dashboards",
     href: "/visualizer",
     icon: Eye,

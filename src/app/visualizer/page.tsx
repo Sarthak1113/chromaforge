@@ -74,10 +74,10 @@ export default function VisualizerPage() {
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-3">
               <Eye className="w-8 h-8 text-indigo-400 shrink-0" />
-              <span>Contextual UI Component &amp; Color Token Previewer</span>
+              <span>Palette Visualizer</span>
             </h1>
             <p className="text-sm sm:text-base text-zinc-400">
-              Preview your active OKLCH palette applied live to mock design assets.
+              Preview your colors on real designs for a better visual understanding.
             </p>
           </div>
 

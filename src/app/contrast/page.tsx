@@ -99,10 +99,10 @@ export default function ContrastPage() {
         <div className="pt-4 pb-2 space-y-2">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-3">
             <CheckCircle2 className="w-8 h-8 text-indigo-400 shrink-0" />
-            <span>WCAG 2.1 &amp; APCA Color Contrast Compliance Checker</span>
+            <span>Contrast Checker</span>
           </h1>
           <p className="text-sm sm:text-base text-zinc-400">
-            Calculate real-time luminance ratios and APCA scores for accessible UI typography.
+            Calculate the contrast ratio of text and background colors.
           </p>
         </div>
 
