@@ -99,10 +99,10 @@ export default function ContrastPage() {
         <div className="pt-4 pb-2 space-y-2">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-3">
             <CheckCircle2 className="w-8 h-8 text-indigo-400 shrink-0" />
-            <span>Color Contrast Checker</span>
+            <span>WCAG 2.1 &amp; APCA Color Contrast Compliance Checker</span>
           </h1>
           <p className="text-sm sm:text-base text-zinc-400">
-            Calculate the contrast ratio of text and background colors.
+            Calculate real-time luminance ratios and APCA scores for accessible UI typography.
           </p>
         </div>
 
@@ -296,6 +296,56 @@ export default function ContrastPage() {
             </div>
           </div>
         </div>
+
+        {/* Frequently Asked Questions (AEO & SEO) */}
+        <section className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-5" aria-label="Frequently Asked Questions">
+          <div>
+            <h2 className="text-base font-bold text-zinc-100">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <p className="text-xs text-zinc-400 mt-1">
+              Essential answers regarding color contrast ratios, accessibility audits, and APCA standards.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                What is the minimum contrast ratio for WCAG Level AA and AAA?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                WCAG 2.1 Level AA requires a contrast ratio of at least 4.5:1 for normal body text and 3:1 for large text (18pt or 14pt bold). Level AAA raises this requirement to 7:1 for normal text and 4.5:1 for large typography, ensuring legibility for users with significant visual impairments.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                How does APCA contrast differ from traditional WCAG 2.1?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                The Accessible Perceptual Contrast Algorithm (APCA) evaluates perceived lightness differences dynamically based on font weight, font size, and visual polarity. Unlike WCAG 2.1, which treats white-on-black identically to black-on-white, APCA accurately reflects how human rods and cones process light-on-dark and dark-on-light displays.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                Can text pass accessibility audits if the font weight is increased?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Yes. Under WCAG guidelines, text that is 14pt and bold (or 18pt regular) is classified as &apos;large text&apos; and is permitted to pass with a lower contrast threshold of 3:1 for Level AA and 4.5:1 for Level AAA. APCA provides even more granular lightness compensation for bold weights.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                How do dark mode color pairs affect visual readability?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Pure white text (#FFFFFF) on pure black (#000000) produces a harsh 21:1 contrast ratio that can cause eye strain and visual halation (glowing blur) for astigmatic readers. Design systems achieve superior dark mode readability using off-white text (such as #E4E4E7) against dark slate or zinc backgrounds (such as #09090B).
+              </p>
+            </div>
+          </div>
+        </section>
       </motion.main>
     </div>
   );

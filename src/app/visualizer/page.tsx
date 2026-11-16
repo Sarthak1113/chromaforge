@@ -74,7 +74,7 @@ export default function VisualizerPage() {
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-3">
               <Eye className="w-8 h-8 text-indigo-400 shrink-0" />
-              <span>Contextual UI Visualizer</span>
+              <span>Contextual UI Component &amp; Color Token Previewer</span>
             </h1>
             <p className="text-sm sm:text-base text-zinc-400">
               Preview your active OKLCH palette applied live to mock design assets.
@@ -128,6 +128,56 @@ export default function VisualizerPage() {
             {selectedCategory === "illustration" && <MockIllustrationView />}
           </motion.div>
         </AnimatePresence>
+
+        {/* Frequently Asked Questions (AEO & SEO) */}
+        <section className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-5 mt-6" aria-label="Frequently Asked Questions">
+          <div>
+            <h2 className="text-base font-bold text-zinc-100">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <p className="text-xs text-zinc-400 mt-1">
+              Common questions about token simulation, dark mode testing, and component design systems.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                How does contextual UI color previewing speed up design systems?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Rather than testing color tokens in isolation on abstract swatch cards, the visualizer maps your active palette directly into real UI widgets: analytics cards, metric charts, button hierarchies, and mobile interfaces. This reveals visual balance and contrast problems immediately before committing to code.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                Can I test my palette for dark mode and light mode readability?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Yes. The visualizer tests how primary accents, secondary fills, surface backgrounds, and border tokens interact in dark theme contexts. You can swap swatches or adjust color counts from 2 to 8 directly in the sticky bottom control bar.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                How do I export visualizer tokens to Tailwind CSS v4 or CSS variables?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Click &apos;Generator&apos; in the bottom toolbar to return to the workspace, then click &apos;Export&apos; (or press E). You can copy clean Tailwind CSS v4 theme variables, CSS custom properties (<code className="font-mono text-zinc-300">--color-primary</code>), JSON token schemas, or SVG vector swatches.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                Does the visualizer support SVG vector export?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Yes. Click the &apos;SVG&apos; button in the bottom dock to download an editable vector graphic of your current palette swatches with hex annotations, ready to import into Figma, Sketch, or Adobe Illustrator.
+              </p>
+            </div>
+          </div>
+        </section>
       </motion.main>
 
       {/* Sticky Bottom Active Palette Bar */}

@@ -165,20 +165,49 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Semantic AEO & SEO Content for AI Answer Engines & Screen Readers */}
+      {/* Semantic AEO & SEO Architecture for Search Engine Crawlers & Screen Readers */}
       <section className="sr-only" aria-label="About ChromaForge Palette Generator">
-        <h1>ChromaForge — Perceptual Color Palette Generator & Design Suite</h1>
+        <h1>ChromaForge: OKLCH Color Palette Generator &amp; Design System Suite</h1>
         <p>
-          ChromaForge is a high-performance, client-side color engineering platform built on the OKLCH color space by Sarthak Ranjan Hota. It delivers perceptually uniform color harmonies, real-time WCAG 2.1 AAA and APCA contrast matrices, procedural Bézier mesh gradients, and ocular vision deficiency simulations.
+          ChromaForge is an advanced, client-side color engineering suite engineered in the OKLCH color space by Sarthak Ranjan Hota. Designed specifically for UI/UX designers, design system engineers, and frontend developers, ChromaForge delivers mathematically coherent color harmonies, real-time accessibility contrast matrices, procedural Bézier gradients, and ocular vision deficiency simulations.
         </p>
-        <h2>Key Capabilities & Shortcuts</h2>
+
+        <h2>Why OKLCH Color Space Outperforms Legacy sRGB and HSL</h2>
+        <p>
+          Traditional web color models such as sRGB, Hex, and HSL suffer from severe perceptual non-uniformity. In HSL, pure yellow possesses a human perceived lightness of roughly 93 percent, whereas pure blue has a perceived lightness of only 26 percent, despite both sharing an identical lightness value of 50 percent. This mathematical discrepancy causes automated color tools in sRGB to produce garish, clashing, or illegible color combinations. OKLCH solves this by modeling color along three perceptual human visual axes: Lightness (L), Chroma (C), and Hue (H). In OKLCH, identical lightness values correspond to identical perceived visual brightness, guaranteeing balanced typography, accessible surface tokens, and cohesive visual hierarchy.
+        </p>
+
+        <h2>Algorithmic Color Harmonies Supported</h2>
+        <p>
+          ChromaForge calculates color relationships along the cylindrical OKLCH manifold across nine mathematical harmony models: Monochromatic for subtle tonal variation, Complementary for high-contrast pairs, Analogous for nature-inspired cohesion, Triadic and Tetradic for multi-hue systems, Split Complementary and Square for balanced complexity, Tonal ramps for design token scales, and Freeform procedural walks with minimum perceptual distance thresholds.
+        </p>
+
+        <h2>Accessibility Compliance: WCAG 2.1 AAA and APCA Standards</h2>
+        <p>
+          Accessible color design is central to ChromaForge. Our integrated tools evaluate relative luminance compliance against W3C Web Content Accessibility Guidelines (WCAG 2.1) Level AA (4.5 to 1 ratio) and Level AAA (7 to 1 ratio). Furthermore, ChromaForge integrates the Accessible Perceptual Contrast Algorithm (APCA), analyzing font weights, spatial frequencies, and display polarity to eliminate contrast false positives in dark mode and light mode interfaces. Built-in ocular simulation matrices enable real-time previews for Protanopia, Deuteranopia, Tritanopia, and Achromatopsia.
+        </p>
+
+        <h2>Keyboard Shortcuts &amp; Rapid Workflow</h2>
         <ul>
-          <li>Press Spacebar to instantly generate a new perceptually uniform OKLCH palette.</li>
-          <li>Press 1 through 8 or click the Lock icon to freeze specific color columns.</li>
-          <li>Choose from 9 algorithmic color harmonies: Monochromatic, Complementary, Analogous, Triadic, Tetradic, Split Complementary, Square, Tonal, and Freeform.</li>
-          <li>Simulate color vision deficiencies including Protanopia, Deuteranopia, Tritanopia, and Achromatopsia.</li>
-          <li>Export production tokens as Tailwind CSS v4, CSS Custom Properties, JSON, SVG, PNG, and shareable Base62 URLs.</li>
+          <li>Press Spacebar to instantly compute and generate a new harmonic OKLCH palette.</li>
+          <li>Press numbers 1 through 8 to lock specific color columns in place.</li>
+          <li>Press L to lock the currently hovered color column.</li>
+          <li>Press S to open the 100 to 900 tint and shade distribution dialog.</li>
+          <li>Press E to export palette tokens into Tailwind CSS v4, CSS Custom Properties, JSON, SVG, PNG, or Base62 shareable URLs.</li>
         </ul>
+
+        <nav aria-label="ChromaForge Internal Tools Directory">
+          <h2>ChromaForge Suite Navigation</h2>
+          <ul>
+            <li><a href="/">Palette Generator Workspace</a></li>
+            <li><a href="/contrast">WCAG and APCA Color Contrast Checker</a></li>
+            <li><a href="/gradients">Procedural Bézier and Mesh CSS Gradient Studio</a></li>
+            <li><a href="/visualizer">Contextual UI Component and Token Visualizer</a></li>
+            <li><a href="/image-picker">OKLCH Dominant Palette Extractor from Image</a></li>
+            <li><a href="/explore">Curated Harmonic Color Palettes Library</a></li>
+            <li><a href="/privacy">Privacy Policy and Data Transparency</a></li>
+          </ul>
+        </nav>
       </section>
 
       {/* Interactive Modals & Sheets */}

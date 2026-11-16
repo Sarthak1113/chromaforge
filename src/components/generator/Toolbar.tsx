@@ -48,9 +48,9 @@ export function Toolbar() {
         </div>
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-sm font-bold text-zinc-100 tracking-tight group-hover:text-white transition-colors">
+            <span className="text-sm font-bold text-zinc-100 tracking-tight group-hover:text-white transition-colors block">
               ChromaForge
-            </h1>
+            </span>
             <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-semibold border border-indigo-500/30">
               OKLCH v2
             </span>

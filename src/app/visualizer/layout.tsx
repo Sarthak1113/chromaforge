@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Interactive UI Component & Dashboard Token Visualizer",
+  title: "UI Color Token Visualizer",
   description:
-    "Preview your color palettes in real-time across digital product interfaces: SaaS analytics dashboards, mobile app views, design system component libraries, and marketing pages.",
+    "Preview color palettes live across mock analytics dashboards, mobile apps, typography systems, and UI component kits before shipping.",
   alternates: {
     canonical: "https://chromaforge.sarthakranjanhota.site/visualizer",
   },
   openGraph: {
-    title: "Interactive UI Component Token Visualizer — ChromaForge",
+    title: "UI Color Token Visualizer — ChromaForge",
     description:
-      "Preview color palettes across SaaS dashboards, mobile apps, and design system component libraries in real-time.",
+      "Preview color palettes live across mock analytics dashboards, mobile apps, typography systems, and UI component kits before shipping.",
     url: "https://chromaforge.sarthakranjanhota.site/visualizer",
     siteName: "ChromaForge",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Interactive UI Component Token Visualizer",
+    title: "UI Color Token Visualizer — ChromaForge",
     description:
-      "Test how your color tokens behave inside realistic UI dashboards and component kits.",
+      "Test how your color tokens behave inside realistic UI dashboards and component kits in real-time.",
   },
 };
 

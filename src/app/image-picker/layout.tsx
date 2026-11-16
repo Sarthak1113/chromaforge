@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "OKLCH Dominant Color Palette Extractor from Image",
+  title: "Extract Palette from Image in OKLCH",
   description:
-    "Upload any photograph, graphic, or image to extract perceptually balanced color swatches and harmonic palettes mapped directly to the OKLCH color space.",
+    "Upload photos and graphics to extract dominant harmonic palettes mapped directly to OKLCH perceptual color space. Free and 100% private.",
   alternates: {
     canonical: "https://chromaforge.sarthakranjanhota.site/image-picker",
   },
   openGraph: {
-    title: "OKLCH Dominant Color Extractor from Image — ChromaForge",
+    title: "Extract Palette from Image in OKLCH — ChromaForge",
     description:
-      "Extract harmonious color swatches from uploaded images with automatic OKLCH gamut mapping and instant palette export.",
+      "Upload photos and graphics to extract dominant harmonic palettes mapped directly to OKLCH perceptual color space. Free and 100% private.",
     url: "https://chromaforge.sarthakranjanhota.site/image-picker",
     siteName: "ChromaForge",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "OKLCH Dominant Color Palette Extractor",
+    title: "Extract Palette from Image in OKLCH — ChromaForge",
     description:
       "Turn any photo or UI mockup into an accessible OKLCH color palette with one click.",
   },

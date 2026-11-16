@@ -136,9 +136,9 @@ export function Navbar({ activePage = "generator" }: NavbarProps) {
           </div>
           <div>
             <div className="flex items-center space-x-1.5 sm:space-x-2">
-              <h1 className="text-sm font-bold text-zinc-100 tracking-tight group-hover:text-white transition-colors">
+              <span className="text-sm font-bold text-zinc-100 tracking-tight group-hover:text-white transition-colors block">
                 ChromaForge
-              </h1>
+              </span>
               <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-semibold border border-indigo-500/30">
                 OKLCH
               </span>
@@ -249,6 +249,18 @@ export function Navbar({ activePage = "generator" }: NavbarProps) {
                         </Link>
                       );
                     })}
+                  </div>
+
+                  {/* Privacy & Legal Footnote */}
+                  <div className="pt-2 mt-1 border-t border-zinc-800/80 px-2 flex items-center justify-between text-[11px] text-zinc-500">
+                    <Link
+                      href="/privacy"
+                      onClick={() => setIsToolsOpen(false)}
+                      className="hover:text-zinc-300 transition-colors"
+                    >
+                      Privacy Policy
+                    </Link>
+                    <span>100% Client-Side</span>
                   </div>
                 </motion.div>
               )}
@@ -433,6 +445,25 @@ export function Navbar({ activePage = "generator" }: NavbarProps) {
                       <Download className="w-3.5 h-3.5 text-indigo-400" />
                       <span>Export Palette</span>
                     </button>
+
+                    <div className="flex items-center justify-center space-x-3 text-[11px] text-zinc-500 pt-1">
+                      <Link
+                        href="/privacy"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="hover:text-zinc-300 transition-colors"
+                      >
+                        Privacy Policy
+                      </Link>
+                      <span>•</span>
+                      <a
+                        href="https://sarthakranjanhota.site"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-zinc-300 transition-colors"
+                      >
+                        Sarthak Ranjan Hota
+                      </a>
+                    </div>
 
                     <p className="text-center text-[10px] font-mono text-zinc-600">
                       ChromaForge • OKLCH Perceptual Engine

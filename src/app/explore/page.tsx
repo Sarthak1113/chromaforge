@@ -237,6 +237,56 @@ export default function ExplorePage() {
             </button>
           </div>
         )}
+
+        {/* Frequently Asked Questions (AEO & SEO) */}
+        <section className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-5 mt-12" aria-label="Frequently Asked Questions">
+          <div>
+            <h2 className="text-base font-bold text-zinc-100">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <p className="text-xs text-zinc-400 mt-1">
+              Curated color schemes, harmonic styles, and design system integration guidelines.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                How are the 240+ curated color palettes generated?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Every curated palette in ChromaForge is mathematically balanced in the OKLCH color space. Our design team curated palettes across diverse aesthetic moods (such as Cyberpunk, Sunset, Pastel, Minimal, and Earthy) ensuring consistent perceptual brightness and WCAG-compliant contrast.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                How can I search and filter palettes by mood or color?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Use the in-page search bar at the top of the directory. You can query palettes by aesthetic theme (e.g., &apos;neon&apos;, &apos;vintage&apos;, &apos;warm&apos;), by tag, or by typing a specific hex color code to find palettes featuring that shade.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                Can I edit or customize a curated palette in the generator?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Yes! Clicking any curated palette card instantly loads its swatches into the ChromaForge Generator workspace. From there, you can lock your favorite swatches, randomize individual columns, adjust tints and shades, or test contrast in real time.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <h3 className="text-xs font-semibold text-indigo-300">
+                What formats can I copy from the curated explore library?
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Clicking the copy icon on any palette card copies a clean comma-separated list of hex values. When opened in the Generator, you can export to Tailwind CSS v4 variables, CSS custom properties, JSON token structures, or SVG vector swatches.
+              </p>
+            </div>
+          </div>
+        </section>
       </motion.main>
     </div>
   );

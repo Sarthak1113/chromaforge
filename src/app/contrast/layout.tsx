@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "WCAG 2.1 & APCA Color Contrast Compliance Checker",
+  title: "WCAG & APCA Color Contrast Checker",
   description:
-    "Evaluate relative luminance ratios and APCA lightness contrast in real-time. Ensure WCAG 2.1 Level AA and AAA accessibility compliance across normal and large typography.",
+    "Calculate real-time relative luminance and APCA contrast ratios. Verify WCAG 2.1 AA and AAA accessibility compliance for typography.",
   alternates: {
     canonical: "https://chromaforge.sarthakranjanhota.site/contrast",
   },
   openGraph: {
-    title: "WCAG 2.1 & APCA Color Contrast Compliance Checker — ChromaForge",
+    title: "WCAG & APCA Color Contrast Checker — ChromaForge",
     description:
-      "Evaluate relative luminance ratios and APCA lightness contrast in real-time. Ensure WCAG 2.1 Level AA and AAA accessibility compliance.",
+      "Calculate real-time relative luminance and APCA contrast ratios. Verify WCAG 2.1 AA and AAA accessibility compliance for typography.",
     url: "https://chromaforge.sarthakranjanhota.site/contrast",
     siteName: "ChromaForge",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "WCAG 2.1 & APCA Color Contrast Checker",
+    title: "WCAG & APCA Color Contrast Checker — ChromaForge",
     description:
       "Verify color accessibility with live WCAG 2.1 AA/AAA and APCA scores for accessible design systems.",
   },
