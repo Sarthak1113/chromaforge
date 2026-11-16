@@ -7,7 +7,6 @@ import {
   Star,
   Copy,
   Check,
-  ShieldCheck,
   Sparkles,
 } from "lucide-react";
 import { getContrastRatio } from "@/lib/colors/contrast";
@@ -152,17 +151,14 @@ export default function ContrastPage() {
         transition={{ duration: 0.25, ease: "easeOut" }}
         className="flex-1 p-5 sm:p-8 max-w-5xl mx-auto w-full flex flex-col space-y-8"
       >
-        {/* Page Header */}
-        <div className="pt-2 pb-1 space-y-1.5">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>WCAG 2.1 &amp; APCA Diagnostic Studio</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight">
-            Color Contrast Checker
+        {/* Header */}
+        <div className="pt-4 pb-2 space-y-2">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-3">
+            <CheckCircle2 className="w-8 h-8 text-indigo-400 shrink-0" />
+            <span>Contrast Checker</span>
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400">
-            Calculate the contrast ratio of text and background colors in real time.
+          <p className="text-sm sm:text-base text-zinc-400">
+            Calculate the contrast ratio of text and background colors.
           </p>
         </div>
 
