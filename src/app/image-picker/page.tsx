@@ -9,7 +9,31 @@ import { rgbToOklch } from "@/lib/colors/oklch";
 import { getNearestColorName } from "@/lib/colors/names";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/common/Navbar";
+import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
 import { motion } from "framer-motion";
+
+const IMAGE_PICKER_FAQS = [
+  {
+    question: "How does ChromaForge extract dominant colors from photos?",
+    answer:
+      "When you drop an image, ChromaForge downsamples the bitmap onto an off-screen HTML5 Canvas and clusters pixel frequencies. It filters out near-black, near-white, and low-saturation noise, then maps the most prominent color clusters into the OKLCH color space to ensure perceptual harmony and balanced contrast.",
+  },
+  {
+    question: "Are my uploaded images uploaded or stored on any external server?",
+    answer:
+      "No. All image decoding and pixel color sampling occurs 100% inside your local browser memory using the standard client-side FileReader API. Your images are never sent over the network, uploaded to cloud buckets, or saved anywhere on external servers.",
+  },
+  {
+    question: "What image file formats are supported?",
+    answer:
+      "ChromaForge supports all web standard image formats including PNG, JPEG, JPG, WEBP, AVIF, and SVG. There is no file size limit because processing is handled directly by your device's graphics processor.",
+  },
+  {
+    question: "How can I use the extracted colors in the palette generator?",
+    answer:
+      "After sampling your image, click 'Open in Generator'. ChromaForge transfers your extracted swatches directly into the interactive generator workspace, where you can lock colors, generate complementary tones, test contrast, and export tokens.",
+  },
+];
 
 export default function ImagePickerPage() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -253,55 +277,8 @@ export default function ImagePickerPage() {
           </div>
         </div>
 
-        {/* Frequently Asked Questions (AEO & SEO) */}
-        <section className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-5" aria-label="Frequently Asked Questions">
-          <div>
-            <h2 className="text-base font-bold text-zinc-100">
-              Frequently Asked Questions (FAQ)
-            </h2>
-            <p className="text-xs text-zinc-400 mt-1">
-              Everything you need to know about extracting color palettes from photographs and graphics.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                How does ChromaForge extract dominant colors from photos?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                When you drop an image, ChromaForge downsamples the bitmap onto an off-screen HTML5 Canvas and clusters pixel frequencies. It filters out near-black, near-white, and low-saturation noise, then maps the most prominent color clusters into the OKLCH color space to ensure perceptual harmony and balanced contrast.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                Are my uploaded images uploaded or stored on any external server?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                No. All image decoding and pixel color sampling occurs 100% inside your local browser memory using the standard client-side FileReader API. Your images are never sent over the network, uploaded to cloud buckets, or saved anywhere on external servers.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                What image file formats are supported?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                ChromaForge supports all web standard image formats including PNG, JPEG, JPG, WEBP, AVIF, and SVG. There is no file size limit because processing is handled directly by your device&apos;s graphics processor.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                How can I use the extracted colors in the palette generator?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                After sampling your image, click &apos;Open in Generator&apos;. ChromaForge transfers your extracted swatches directly into the interactive generator workspace, where you can lock colors, generate complementary tones, test contrast, and export tokens.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Collapsible Frequently Asked Questions (AEO & SEO) */}
+        <CollapsibleFaq items={IMAGE_PICKER_FAQS} />
       </motion.main>
     </div>
   );

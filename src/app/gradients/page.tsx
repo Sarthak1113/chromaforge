@@ -16,6 +16,7 @@ import {
 import { generateRandomOklch } from "@/lib/colors/harmonies";
 import { oklchToHex, rgbToHsl } from "@/lib/colors/oklch";
 import { Navbar } from "@/components/common/Navbar";
+import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   renderGradientToCanvas,
@@ -56,6 +57,25 @@ const RATIOS: { id: AspectRatio; label: string; aspectClass: string; w: number; 
   { id: "1:1", label: "1:1", aspectClass: "aspect-square", w: 1080, h: 1080 },
   { id: "4:3", label: "4:3", aspectClass: "aspect-[4/3]", w: 1440, h: 1080 },
   { id: "9:16", label: "9:16", aspectClass: "aspect-[9/16] max-h-[460px]", w: 1080, h: 1920 },
+];
+
+const GRADIENT_FAQS = [
+  {
+    question: "Why do standard CSS linear gradients look muddy and gray in the center?",
+    answer: "Standard CSS linear gradients interpolate colors in the non-linear sRGB color space. When transitioning between complementary hues (like cyan and magenta), the straight line in sRGB cuts directly through the desaturated center of the color cube where red, green, and blue values cancel out, creating an unnatural 'gray dead zone'.",
+  },
+  {
+    question: "How does Bézier interpolation preserve color saturation?",
+    answer: "Instead of cutting straight across the color space, ChromaForge curves the interpolation path along the high-chroma outer perimeter using Bézier mathematical splines and polar OKLCH coordinates. This maintains vivid chromatic intensity across midpoints without desaturation.",
+  },
+  {
+    question: "Is OKLCH gradient syntax supported in all modern web browsers?",
+    answer: "Yes. CSS Color Module Level 4 syntax like linear-gradient(in oklch 90deg, ...) is supported across Chrome, Safari, Firefox, and Edge. For older browsers, ChromaForge automatically exports fallback hsla rules and vendor prefixes.",
+  },
+  {
+    question: "How do I export and use multi-stop gradients in CSS?",
+    answer: "Click the 'Copy CSS' button to open the code preview modal. You can copy the complete CSS block or click 'Download' to get a ready-to-import gradient.css stylesheet with standard, webkit, and moz fallback rules.",
+  },
 ];
 
 function hexToHsla(hex: string): string {
@@ -398,10 +418,10 @@ export default function GradientsPage() {
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-3">
               <Layers className="w-8 h-8 text-indigo-400 shrink-0" />
-              <span>Procedural Bézier &amp; Mesh CSS Gradient Generator</span>
+              <span>Gradient Studio</span>
             </h1>
             <p className="text-sm sm:text-base text-zinc-400">
-              Generate mesh warps, Voronoi noise, and Bézier gradients with native aspect ratio exports.
+              Generate custom mesh, Voronoi, and Bézier gradients.
             </p>
           </div>
 
@@ -878,55 +898,8 @@ export default function GradientsPage() {
           </div>
         </div>
 
-        {/* Frequently Asked Questions (AEO & SEO) */}
-        <section className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-5" aria-label="Frequently Asked Questions">
-          <div>
-            <h2 className="text-base font-bold text-zinc-100">
-              Frequently Asked Questions (FAQ)
-            </h2>
-            <p className="text-xs text-zinc-400 mt-1">
-              Technical answers regarding Bézier gradients, avoiding muddy midtones, and multi-browser CSS export.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                Why do standard CSS linear gradients look muddy and gray in the center?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Standard CSS linear gradients interpolate colors in the non-linear sRGB color space. When transitioning between complementary hues (like cyan and magenta), the straight line in sRGB cuts directly through the desaturated center of the color cube where red, green, and blue values cancel out, creating an unnatural &apos;gray dead zone&apos;.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                How does Bézier interpolation preserve color saturation?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Instead of cutting straight across the color space, ChromaForge curves the interpolation path along the high-chroma outer perimeter using Bézier mathematical splines and polar OKLCH coordinates. This maintains vivid chromatic intensity across midpoints without desaturation.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                Is OKLCH gradient syntax supported in all modern web browsers?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Yes. CSS Color Module Level 4 syntax like <code className="font-mono text-zinc-300">linear-gradient(in oklch 90deg, ...)</code> is supported across Chrome, Safari, Firefox, and Edge. For older browsers, ChromaForge automatically exports fallback hsla rules and vendor prefixes.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
-              <h3 className="text-xs font-semibold text-indigo-300">
-                How do I export and use multi-stop gradients in CSS?
-              </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Click the &apos;Copy CSS&apos; button to open the code preview modal. You can copy the complete CSS block or click &apos;Download&apos; to get a ready-to-import <code className="font-mono text-zinc-300">gradient.css</code> stylesheet with standard, webkit, and moz fallback rules.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Collapsible Frequently Asked Questions (AEO & SEO) */}
+        <CollapsibleFaq items={GRADIENT_FAQS} />
       </motion.main>
 
       {/* Gradient CSS Popup Modal */}
