@@ -39,9 +39,19 @@ const CONTRAST_FAQS = [
   },
 ];
 
+const CONTRAST_TIPS = [
+  "Effective color contrast isn't just about compliance—it shapes visual hierarchy, CTA prominence, and effortless readability.",
+  "High-contrast typography ensures comfortable reading velocity, optical clarity, and reduced eye strain across all devices.",
+  "In OKLCH, identical lightness values guarantee uniform perceived luminance regardless of hue or saturation.",
+  "Pairing sufficient luminance delta with comfortable font weight eliminates visual halation on dark mode displays.",
+  "Typography gives language a visual voice, shaping rhythm, hierarchy, and readability across modern interfaces.",
+];
+
 export default function ContrastPage() {
   const [fgHex, setFgHex] = useState("#112A46");
   const [bgHex, setBgHex] = useState("#ACC8E5");
+  const [tipIndex, setTipIndex] = useState(0);
+  const [subheading, setSubheading] = useState(CONTRAST_TIPS[0]);
   const [copied, setCopied] = useState(false);
 
   // Parse RGB for Contrast
@@ -73,6 +83,12 @@ export default function ContrastPage() {
     const temp = bgHex;
     setBgHex(fgHex);
     setFgHex(temp);
+  };
+
+  const handleNextTip = () => {
+    const nextIdx = (tipIndex + 1) % CONTRAST_TIPS.length;
+    setTipIndex(nextIdx);
+    setSubheading(CONTRAST_TIPS[nextIdx]);
   };
 
   const handleCopyTokens = () => {
@@ -292,12 +308,25 @@ export default function ContrastPage() {
           >
             {/* Top Bar of Preview */}
             <div className="flex items-center justify-between w-full">
-              <span
-                className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border opacity-80"
-                style={{ borderColor: fgHex }}
-              >
-                Live Preview
-              </span>
+              <div className="flex items-center space-x-2">
+                <span
+                  className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border opacity-80"
+                  style={{ borderColor: fgHex }}
+                >
+                  Live Preview
+                </span>
+
+                <button
+                  type="button"
+                  onClick={handleNextTip}
+                  className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full border text-[10px] font-mono font-medium opacity-80 hover:opacity-100 transition-all cursor-pointer active:scale-95 shadow-xs"
+                  style={{ borderColor: fgHex }}
+                  title="Cycle to next contrast & design tip"
+                >
+                  <Sparkles className="w-3 h-3" />
+                  <span>Next Tip</span>
+                </button>
+              </div>
 
               {/* Swap Button */}
               <button
@@ -321,8 +350,14 @@ export default function ContrastPage() {
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                 Tip of the Day
               </h2>
-              <p className="text-sm sm:text-base leading-relaxed opacity-90 font-medium">
-                Typography gives language a visual voice, shaping rhythm, hierarchy, and readability.
+              <p
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) => setSubheading(e.currentTarget.textContent || "")}
+                className="text-sm sm:text-base leading-relaxed opacity-90 font-medium outline-none focus:ring-1 focus:ring-current/40 rounded-lg p-1 transition-all cursor-text"
+                title="Click to edit or type custom text"
+              >
+                {subheading}
               </p>
             </div>
 
