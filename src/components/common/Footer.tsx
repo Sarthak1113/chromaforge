@@ -2,15 +2,38 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Globe, Mail, ExternalLink } from "lucide-react";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  const isLinkActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/" || pathname?.startsWith("/palette");
+    }
+    return pathname === href;
+  };
+
+  const UTILITIES_LINKS = [
+    { name: "Palette Generator", href: "/" },
+    { name: "Contrast Checker", href: "/contrast" },
+    { name: "Gradient Studio", href: "/gradients" },
+    { name: "Palette Visualizer", href: "/visualizer" },
+    { name: "Image Extractor", href: "/image-picker" },
+    { name: "Curated Palettes", href: "/explore" },
+  ];
+
+  const PLATFORM_LINKS = [
+    { name: "Privacy Policy", href: "/privacy" },
+  ];
+
   return (
     <footer
-      className="w-full bg-zinc-950 border-t border-zinc-800/80 text-zinc-400 select-none pb-[calc(1rem+env(safe-area-inset-bottom))]"
+      className="w-full bg-zinc-950 border-t border-zinc-800/80 text-zinc-400 select-none pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
       aria-label="Site Footer"
     >
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-6 pt-12 md:pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
           {/* Left Column: Brand Logo & Tagline */}
           <div className="md:col-span-5 lg:col-span-4 space-y-4">
@@ -40,36 +63,26 @@ export function Footer() {
                 Design Utilities
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
-                <li>
-                  <Link href="/" className="hover:text-emerald-400 transition-colors">
-                    Palette Generator
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contrast" className="hover:text-emerald-400 transition-colors">
-                    Contrast Checker
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/gradients" className="hover:text-emerald-400 transition-colors">
-                    Gradient Studio
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/visualizer" className="hover:text-emerald-400 transition-colors">
-                    Palette Visualizer
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/image-picker" className="hover:text-emerald-400 transition-colors">
-                    Image Extractor
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/explore" className="hover:text-emerald-400 transition-colors">
-                    Curated Palettes
-                  </Link>
-                </li>
+                {UTILITIES_LINKS.map((link) => {
+                  const active = isLinkActive(link.href);
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className={`inline-flex items-center gap-1.5 transition-colors ${
+                          active
+                            ? "text-emerald-400 font-semibold"
+                            : "hover:text-emerald-400"
+                        }`}
+                      >
+                        {active && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                        )}
+                        <span>{link.name}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
@@ -90,11 +103,26 @@ export function Footer() {
                     <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
                 </li>
-                <li>
-                  <Link href="/privacy" className="hover:text-emerald-400 transition-colors">
-                    Privacy Policy
-                  </Link>
-                </li>
+                {PLATFORM_LINKS.map((link) => {
+                  const active = isLinkActive(link.href);
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className={`inline-flex items-center gap-1.5 transition-colors ${
+                          active
+                            ? "text-emerald-400 font-semibold"
+                            : "hover:text-emerald-400"
+                        }`}
+                      >
+                        {active && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                        )}
+                        <span>{link.name}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
                 <li>
                   <a
                     href="/llms.txt"
@@ -109,8 +137,8 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Right Column: Creator, Website Icon & Mail Icon, Copyright */}
-          <div className="md:col-span-3 lg:col-span-3 space-y-4 md:text-right flex flex-col md:items-end justify-between">
+          {/* Right Column: Creator, Website Icon & Mail Icon */}
+          <div className="md:col-span-3 lg:col-span-3 space-y-4 md:text-right flex flex-col md:items-end justify-start">
             <div className="space-y-1">
               <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider">
                 Crafted by
@@ -126,12 +154,12 @@ export function Footer() {
             {/* Only Website and Mail icons with sleek hover effects */}
             <div className="flex items-center space-x-3 pt-1">
               <a
-                href="https://www.sarthakranjanhota.com"
+                href="https://sarthakranjanhota.site"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Sarthak Ranjan Hota Website (www.sarthakranjanhota.com)"
-                title="www.sarthakranjanhota.com"
-                className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-400 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm group"
+                aria-label="Sarthak Ranjan Hota Website (sarthakranjanhota.site)"
+                title="sarthakranjanhota.site"
+                className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-400 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm group cursor-pointer"
               >
                 <Globe className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               </a>
@@ -140,17 +168,20 @@ export function Footer() {
                 href="mailto:sarthakranjanhota.official@gmail.com"
                 aria-label="Email Sarthak Ranjan Hota"
                 title="sarthakranjanhota.official@gmail.com"
-                className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-400 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm group"
+                className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-400 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm group cursor-pointer"
               >
                 <Mail className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
-
-            {/* Copyright */}
-            <div className="text-[11px] text-zinc-500 pt-2">
-              © {new Date().getFullYear()} Color-Mint. All rights reserved.
-            </div>
           </div>
+        </div>
+
+        {/* 1px divider bar across the middle */}
+        <div className="w-full h-px bg-zinc-800/80 my-8" />
+
+        {/* Centered Copyright */}
+        <div className="text-center text-xs text-zinc-500">
+          © {new Date().getFullYear()} Color-Mint. All rights reserved.
         </div>
       </div>
     </footer>

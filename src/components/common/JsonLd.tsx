@@ -21,7 +21,7 @@ export function JsonLd() {
     creator: {
       "@type": "Person",
       name: "Sarthak Ranjan Hota",
-      url: "https://www.sarthakranjanhota.com",
+      url: "https://sarthakranjanhota.site",
       jobTitle: "Product Designer & Frontend Engineer",
     },
     featureList: [
@@ -83,7 +83,7 @@ export function JsonLd() {
     author: {
       "@type": "Person",
       name: "Sarthak Ranjan Hota",
-      url: "https://www.sarthakranjanhota.com",
+      url: "https://sarthakranjanhota.site",
     },
   };
 

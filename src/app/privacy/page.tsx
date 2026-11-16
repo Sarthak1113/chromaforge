@@ -114,7 +114,7 @@ export default function PrivacyPage() {
             <p className="text-zinc-400">
               Color-Mint was engineered and designed by{" "}
               <a
-                href="https://www.sarthakranjanhota.com"
+                href="https://sarthakranjanhota.site"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-emerald-400 hover:underline font-semibold"
