@@ -245,27 +245,53 @@ export default function ContrastPage() {
           </div>
         </div>
 
-        {/* How It Works (Bottom Section) */}
-        <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h2 className="text-sm font-bold text-zinc-100">How It Works</h2>
-          <p className="text-xs text-zinc-400 leading-relaxed">
-            Our tool takes the guesswork out of color accessibility by strictly adhering to the Web Content Accessibility Guidelines (WCAG). To ensure your designs are readable for everyone, we evaluate your color pairings against the two standard WCAG contrast levels:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1">
-              <div className="text-xs font-semibold text-zinc-200">
-                Level AA (Minimum Contrast)
+        {/* How It Works & Accessibility Standards Guide (AEO Direct Answers) */}
+        <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-5">
+          <div>
+            <h2 className="text-base font-bold text-zinc-100">
+              Color Contrast & Accessibility Standards Guide
+            </h2>
+            <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+              ChromaForge calculates relative luminance and perceptual contrast strictly compliant with W3C Web Content Accessibility Guidelines (WCAG 2.1) and the modern Accessible Perceptual Contrast Algorithm (APCA).
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <div className="text-xs font-semibold text-zinc-200 flex items-center justify-between">
+                <span>WCAG Level AA (Minimum Contrast)</span>
+                <span className="font-mono text-emerald-400 text-[11px]">4.5:1 / 3:1</span>
               </div>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Requires a contrast ratio of at least 4.5:1 for standard text, and 3:1 for large (18pt+) or bold text.
+                Requires a minimum contrast ratio of <strong>4.5:1</strong> for regular body text (&lt; 18pt) and <strong>3.0:1</strong> for large text (18pt+ or 14pt bold). This ensures content is readable for users with moderate low vision.
               </p>
             </div>
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1">
-              <div className="text-xs font-semibold text-zinc-200">
-                Level AAA (Enhanced Contrast)
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <div className="text-xs font-semibold text-zinc-200 flex items-center justify-between">
+                <span>WCAG Level AAA (Enhanced Contrast)</span>
+                <span className="font-mono text-indigo-400 text-[11px]">7.0:1 / 4.5:1</span>
               </div>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                The gold standard for accessibility, requiring a 7:1 ratio for standard text, and 4.5:1 for large or bold text.
+                The gold standard for accessibility, demanding at least <strong>7.0:1</strong> for body typography and <strong>4.5:1</strong> for large headings, guaranteeing legibility across severe visual impairments.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <div className="text-xs font-semibold text-zinc-200">
+                How Relative Luminance is Calculated
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Luminance is calculated by linearizing sRGB values through gamma expansion and weighting spectral sensitivity (21.26% Red, 71.52% Green, 7.22% Blue), measuring perceived photometric brightness.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <div className="text-xs font-semibold text-zinc-200">
+                APCA vs Traditional WCAG 2.1
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                APCA (Accessible Perceptual Contrast Algorithm) models human spatial vision, accounting for font weight and polarity (dark-on-light vs light-on-dark) to eliminate false contrast failures.
               </p>
             </div>
           </div>

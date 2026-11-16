@@ -828,34 +828,51 @@ export default function GradientsPage() {
           </div>
         </div>
 
-        {/* How It Works (Bottom Spec Guide) */}
+        {/* Gradient Engineering & Mathematical Reference (AEO Direct Answers) */}
         <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h2 className="text-sm font-bold text-zinc-100">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1">
+          <div>
+            <h2 className="text-base font-bold text-zinc-100">
+              Procedural Gradient Architecture & Color Science
+            </h2>
+            <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Standard digital gradients produce washed-out midpoints. ChromaForge solves this by combining OKLCH cylindrical space with non-linear Bézier and cellular noise fields.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <div className="text-xs font-semibold text-zinc-200">
+                Eliminating the Gray Dead Zone
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Linear sRGB gradients cut through the desaturated center of the color cube. Bézier interpolation curves around the perimeter, sustaining vibrant midpoint chroma.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
+              <div className="text-xs font-semibold text-zinc-200">
+                OKLCH Perceptual Uniformity
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Matches biological human ocular sensitivity so gradient transitions feel uniformly smooth without abrupt perceived luminance spikes.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
               <div className="text-xs font-semibold text-zinc-200">
                 Voronoi & Domain Warping
               </div>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Applies procedural cellular displacement algorithms to twist and stretch colors into fluid, liquid organic blobs rather than rigid grids.
+                Applies procedural cellular displacement algorithms to stretch color stops into fluid, organic aesthetic blobs rather than static linear lines.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1">
-              <div className="text-xs font-semibold text-zinc-200">
-                Bézier Interpolation
-              </div>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Control transitions using Soft Bézier for hazy atmospheric blends or Sharp Bézier for defined graphic edges.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1">
+            <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-1.5">
               <div className="text-xs font-semibold text-zinc-200">
                 Anti-Banding Noise Grain
               </div>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Applies subtle tactile grain to eliminate stepped color rings on high-resolution displays and add a retro aesthetic.
+                Applies procedural perceptual grain to eliminate stepped color contouring rings on high-resolution Retina and OLED mobile displays.
               </p>
             </div>
           </div>

@@ -165,6 +165,22 @@ export default function Home() {
         </button>
       </div>
 
+      {/* Semantic AEO & SEO Content for AI Answer Engines & Screen Readers */}
+      <section className="sr-only" aria-label="About ChromaForge Palette Generator">
+        <h1>ChromaForge — Perceptual Color Palette Generator & Design Suite</h1>
+        <p>
+          ChromaForge is a high-performance, client-side color engineering platform built on the OKLCH color space by Sarthak Ranjan Hota. It delivers perceptually uniform color harmonies, real-time WCAG 2.1 AAA and APCA contrast matrices, procedural Bézier mesh gradients, and ocular vision deficiency simulations.
+        </p>
+        <h2>Key Capabilities & Shortcuts</h2>
+        <ul>
+          <li>Press Spacebar to instantly generate a new perceptually uniform OKLCH palette.</li>
+          <li>Press 1 through 8 or click the Lock icon to freeze specific color columns.</li>
+          <li>Choose from 9 algorithmic color harmonies: Monochromatic, Complementary, Analogous, Triadic, Tetradic, Split Complementary, Square, Tonal, and Freeform.</li>
+          <li>Simulate color vision deficiencies including Protanopia, Deuteranopia, Tritanopia, and Achromatopsia.</li>
+          <li>Export production tokens as Tailwind CSS v4, CSS Custom Properties, JSON, SVG, PNG, and shareable Base62 URLs.</li>
+        </ul>
+      </section>
+
       {/* Interactive Modals & Sheets */}
       <ThemeSettingsSheet />
       <ShadesModal />
