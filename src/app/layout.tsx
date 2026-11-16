@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { AppProviders } from "@/components/providers/JotaiProvider";
 import { JsonLd } from "@/components/common/JsonLd";
@@ -103,6 +104,18 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className="antialiased min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
+        {/* Google Tag (gtag.js) / Google Tag Manager */}
+        <Script
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-TGSB83F3"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
