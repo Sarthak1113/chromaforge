@@ -45,6 +45,16 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: ["/icon.svg"],
+  },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     title: "ChromaForge — Perceptual Color Palette Generator & Design Suite",
     description:
@@ -74,6 +84,12 @@ export const metadata: Metadata = {
     },
   },
   category: "Design Tools",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    other: {
+      "msvalidate.01": [process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || ""],
+    },
+  },
 };
 
 export default function RootLayout({

@@ -70,9 +70,9 @@ export default function ExplorePage() {
           {/* Body Sub-Header: Title + Search */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-zinc-800/80">
             <div>
-              <h1 className="text-lg font-bold text-zinc-100 tracking-tight flex items-center space-x-2">
-                <Compass className="w-5 h-5 text-indigo-400" />
-                <span>Explore Palettes</span>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-2.5">
+                <Compass className="w-6 h-6 text-indigo-400" />
+                <span>Curated Color Palettes Library</span>
               </h1>
               <p className="text-xs text-zinc-400 mt-1">
                 Showing {filteredPalettes.length > 0 ? (validCurrentPage - 1) * ITEMS_PER_PAGE + 1 : 0}–
