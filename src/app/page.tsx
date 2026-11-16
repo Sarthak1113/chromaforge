@@ -28,7 +28,13 @@ import { ColorAdjusterModal } from "@/components/generator/ColorAdjusterModal";
 import { ExportModal } from "@/components/export/ExportModal";
 import { KeyboardShortcutsHelp } from "@/components/common/KeyboardShortcutsHelp";
 import { ThemeSettingsSheet } from "@/components/generator/ThemeSettingsSheet";
-import { Sparkles, SlidersHorizontal } from "lucide-react";
+import { ScienceSection } from "@/components/home/ScienceSection";
+import { ToolsBentoSection } from "@/components/home/ToolsBentoSection";
+import { VisualizerShowcaseSection } from "@/components/home/VisualizerShowcaseSection";
+import { DeveloperHandoffSection } from "@/components/home/DeveloperHandoffSection";
+import { ComparisonTableSection } from "@/components/home/ComparisonTableSection";
+import { CtaBannerSection } from "@/components/home/CtaBannerSection";
+import { Sparkles, SlidersHorizontal, ChevronDown } from "lucide-react";
 
 export default function Home() {
   const generatePalette = useSetAtom(generatePaletteAtom);
@@ -166,7 +172,23 @@ export default function Home() {
             <span>Tune</span>
           </button>
         </div>
+
+        {/* Subtle Scroll Cue for Desktop Visitors */}
+        <div className="hidden lg:flex items-center justify-center absolute bottom-2 left-1/2 -translate-x-1/2 z-20 pointer-events-none opacity-60 hover:opacity-100 transition-opacity">
+          <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-zinc-900/80 border border-zinc-800 text-[11px] font-mono text-zinc-400 backdrop-blur-sm">
+            <span>Scroll for color science &amp; design tools</span>
+            <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
+          </div>
+        </div>
       </div>
+
+      {/* Conversion-Optimized Content Sections */}
+      <ScienceSection />
+      <ToolsBentoSection />
+      <VisualizerShowcaseSection />
+      <DeveloperHandoffSection />
+      <ComparisonTableSection />
+      <CtaBannerSection />
 
       <Footer />
 
