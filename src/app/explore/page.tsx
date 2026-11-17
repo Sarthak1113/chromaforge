@@ -3,7 +3,20 @@
 import React, { useState, useMemo, useEffect, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Search, Copy, Check, ChevronLeft, ChevronRight, Compass, X, SlidersHorizontal, Sparkles } from "lucide-react";
+import {
+  Search,
+  Copy,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Compass,
+  X,
+  SlidersHorizontal,
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+  RotateCcw,
+} from "lucide-react";
 import { paletteToSlug } from "@/lib/url/base62";
 import {
   ALL_CURATED_PALETTES,
@@ -14,7 +27,7 @@ import {
 import { Navbar } from "@/components/common/Navbar";
 import { Footer } from "@/components/common/Footer";
 import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const EXPLORE_FAQS = [
   {
@@ -69,6 +82,7 @@ function ExploreContent() {
   const [searchQuery, setSearchQuery] = useState<string>(initialQuery);
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [isFilterExpanded, setIsFilterExpanded] = useState<boolean>(false);
 
   // Sync state to URL smoothly without full navigation
   const syncUrl = useCallback(
@@ -210,6 +224,7 @@ function ExploreContent() {
   };
 
   const hasActiveFilters = Boolean(selectedStyle || selectedCount || searchQuery.trim());
+  const activeFilterCount = (selectedStyle ? 1 : 0) + (selectedCount ? 1 : 0);
 
   return (
     <div className="min-h-screen w-full bg-zinc-950 text-zinc-100 flex flex-col select-none">
@@ -264,162 +279,294 @@ function ExploreContent() {
             </div>
           </div>
 
-          {/* Interactive Filter Panel (Styles & Color Counts) */}
-          <div className="mb-8 p-5 bg-zinc-900/70 border border-zinc-800/80 rounded-2xl shadow-sm backdrop-blur-sm space-y-4">
-            {/* Styles Row */}
-            <div>
-              <div className="flex items-center justify-between mb-2.5">
-                <div className="flex items-center space-x-2">
-                  <SlidersHorizontal className="w-3.5 h-3.5 text-indigo-400" />
-                  <h2 className="text-sm font-semibold text-zinc-200">Styles</h2>
-                  {selectedStyle && (
-                    <span className="text-[11px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full">
-                      {selectedStyle}
-                    </span>
-                  )}
-                </div>
-                {hasActiveFilters && (
-                  <button
-                    onClick={handleClearFilters}
-                    className="text-xs text-zinc-400 hover:text-indigo-400 transition-colors flex items-center space-x-1 cursor-pointer"
-                  >
-                    <X className="w-3 h-3" />
-                    <span>Reset filters</span>
-                  </button>
-                )}
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleStyleClick(null)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                    selectedStyle === null
-                      ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm"
-                      : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+          {/* Unique Collapsible Filter Chip System */}
+          <div className="mb-8 space-y-3">
+            {/* Collapsible Filter Bar */}
+            <div className="flex flex-wrap items-center gap-2">
+              {/* Main Expand/Collapse Master Filter Chip */}
+              <button
+                type="button"
+                onClick={() => setIsFilterExpanded(!isFilterExpanded)}
+                className={`inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 ${
+                  isFilterExpanded || activeFilterCount > 0
+                    ? "bg-zinc-100 text-zinc-950 font-bold shadow-md shadow-black/20"
+                    : "bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 hover:border-zinc-700"
+                }`}
+                title={isFilterExpanded ? "Collapse filter options" : "Expand all styles and sizes"}
+              >
+                <SlidersHorizontal
+                  className={`w-3.5 h-3.5 ${
+                    isFilterExpanded || activeFilterCount > 0 ? "text-indigo-600" : "text-indigo-400"
                   }`}
-                >
-                  All
-                </button>
-                {STYLE_OPTIONS.map((style) => {
-                  const isActive = selectedStyle === style;
-                  return (
-                    <button
-                      key={style}
-                      type="button"
-                      onClick={() => handleStyleClick(style)}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                        isActive
-                          ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm ring-2 ring-indigo-500/30"
-                          : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
-                      }`}
-                    >
-                      {style}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Sizes (Color Count: 2 to 8) Row */}
-            <div className="pt-3 border-t border-zinc-800/60">
-              <div className="flex items-center space-x-2 mb-2.5">
-                <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
-                <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-                  Palette Size
-                </h3>
-                {selectedCount && (
-                  <span className="text-[11px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">
-                    {selectedCount} Colors
+                />
+                <span>Filter Palettes</span>
+                {activeFilterCount > 0 && (
+                  <span className="w-5 h-5 rounded-full bg-indigo-600 text-white font-mono text-[10px] font-bold flex items-center justify-center">
+                    {activeFilterCount}
                   </span>
                 )}
-              </div>
+                {isFilterExpanded ? (
+                  <ChevronUp className="w-3.5 h-3.5 ml-0.5" />
+                ) : (
+                  <ChevronDown className="w-3.5 h-3.5 ml-0.5 opacity-60" />
+                )}
+              </button>
 
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleCountClick(null)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                    selectedCount === null
-                      ? "bg-indigo-600 text-white font-bold shadow-sm"
-                      : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
-                  }`}
-                >
-                  All Sizes
-                </button>
-                {COLOR_COUNT_OPTIONS.map((count) => {
-                  const isActive = selectedCount === count;
-                  return (
-                    <button
-                      key={count}
-                      type="button"
-                      onClick={() => handleCountClick(count)}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                        isActive
-                          ? "bg-indigo-600 text-white font-bold shadow-sm ring-2 ring-indigo-500/30"
-                          : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
-                      }`}
-                    >
-                      {count} Colors
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Active Filter Pills Bar (if filters selected) */}
-          {hasActiveFilters && (
-            <div className="flex flex-wrap items-center gap-2 mb-6 text-xs text-zinc-400">
-              <span className="font-medium text-zinc-300">Active Filters:</span>
+              {/* Active Style Chip (Removable directly from the bar) */}
               {selectedStyle && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200">
-                  Style: <strong className="text-white">{selectedStyle}</strong>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-500/40 text-xs text-indigo-200 shadow-sm animate-in fade-in duration-200">
+                  <span>
+                    Style: <strong className="text-white">{selectedStyle}</strong>
+                  </span>
                   <button
+                    type="button"
                     onClick={() => handleStyleClick(selectedStyle)}
-                    className="hover:text-red-400 ml-1 p-0.5"
-                    title="Remove style filter"
+                    className="hover:text-red-400 text-indigo-300 p-0.5 rounded transition-colors cursor-pointer"
+                    title="Clear style filter"
                   >
                     <X className="w-3 h-3" />
                   </button>
-                </span>
+                </div>
               )}
+
+              {/* Active Size Chip (Removable directly from the bar) */}
               {selectedCount && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono">
-                  Size: <strong className="text-white">{selectedCount} Colors</strong>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-500/40 text-xs text-indigo-200 font-mono shadow-sm animate-in fade-in duration-200">
+                  <span>
+                    Size: <strong className="text-white">{selectedCount} Colors</strong>
+                  </span>
                   <button
+                    type="button"
                     onClick={() => handleCountClick(selectedCount)}
-                    className="hover:text-red-400 ml-1 p-0.5"
-                    title="Remove size filter"
+                    className="hover:text-red-400 text-indigo-300 p-0.5 rounded transition-colors cursor-pointer"
+                    title="Clear size filter"
                   >
                     <X className="w-3 h-3" />
                   </button>
-                </span>
+                </div>
               )}
+
+              {/* Active Search Query Chip */}
               {searchQuery.trim() && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200">
-                  Search: <strong className="text-white">&ldquo;{searchQuery}&rdquo;</strong>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs text-zinc-300 shadow-sm animate-in fade-in duration-200">
+                  <span>
+                    Search: <strong className="text-white">&ldquo;{searchQuery}&rdquo;</strong>
+                  </span>
                   <button
+                    type="button"
                     onClick={() => {
                       setSearchQuery("");
                       setCurrentPage(1);
                       syncUrl(selectedStyle, selectedCount, "", 1, true);
                     }}
-                    className="hover:text-red-400 ml-1 p-0.5"
+                    className="hover:text-red-400 text-zinc-400 p-0.5 rounded transition-colors cursor-pointer"
                     title="Clear search"
                   >
                     <X className="w-3 h-3" />
                   </button>
-                </span>
+                </div>
               )}
-              <button
-                onClick={handleClearFilters}
-                className="text-xs text-indigo-400 hover:text-indigo-300 ml-1 font-semibold transition-colors"
-              >
-                Clear all
-              </button>
+
+              {/* Quick Popular Style Chips (Available when collapsed for instant 1-tap filtering) */}
+              {!isFilterExpanded && (
+                <>
+                  <div className="hidden sm:flex items-center gap-1.5 overflow-x-auto py-0.5">
+                    {["Warm", "Cold", "Pastel", "Dark", "Neon", "Vintage", "Minimal"].map((style) => {
+                      const isActive = selectedStyle === style;
+                      return (
+                        <button
+                          key={style}
+                          type="button"
+                          onClick={() => handleStyleClick(style)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                            isActive
+                              ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm"
+                              : "bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800/80"
+                          }`}
+                        >
+                          {style}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsFilterExpanded(true)}
+                    className="text-xs text-indigo-400 hover:text-indigo-300 px-2.5 py-1.5 rounded-xl hover:bg-indigo-950/30 transition-colors cursor-pointer font-medium"
+                  >
+                    + More Styles & Sizes
+                  </button>
+                </>
+              )}
+
+              {/* Reset All Filters Button */}
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={handleClearFilters}
+                  className="text-xs text-zinc-400 hover:text-red-400 flex items-center space-x-1 px-2.5 py-1.5 rounded-xl hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors ml-auto cursor-pointer"
+                  title="Reset all filters and search"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Reset</span>
+                </button>
+              )}
             </div>
-          )}
+
+            {/* Smooth Collapsible Filter Tray (Expanded Card) */}
+            <AnimatePresence>
+              {isFilterExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0, y: -8 }}
+                  animate={{ opacity: 1, height: "auto", y: 0 }}
+                  exit={{ opacity: 0, height: 0, y: -8 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="p-5 bg-zinc-900/80 border border-zinc-800/90 rounded-2xl shadow-xl backdrop-blur-md space-y-4">
+                    {/* Header inside the expanded drawer */}
+                    <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80">
+                      <div className="flex items-center space-x-2">
+                        <Sparkles className="w-4 h-4 text-indigo-400" />
+                        <span className="text-xs sm:text-sm font-semibold text-zinc-200">
+                          Explore by Style & Palette Size
+                        </span>
+                        <span className="text-[11px] text-zinc-500 font-mono hidden sm:inline">
+                          ({filteredPalettes.length.toLocaleString()} matching)
+                        </span>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        {hasActiveFilters && (
+                          <button
+                            type="button"
+                            onClick={handleClearFilters}
+                            className="text-xs text-zinc-400 hover:text-indigo-400 transition-colors cursor-pointer mr-2"
+                          >
+                            Reset
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => setIsFilterExpanded(false)}
+                          className="text-xs text-zinc-400 hover:text-white flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700/60 transition-colors cursor-pointer"
+                        >
+                          <span>Collapse</span>
+                          <ChevronUp className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Styles Row */}
+                    <div>
+                      <div className="flex items-center space-x-2 mb-2.5">
+                        <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                          Aesthetic Styles ({STYLE_OPTIONS.length})
+                        </h3>
+                        {selectedStyle && (
+                          <span className="text-[10px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full">
+                            {selectedStyle}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleStyleClick(null)}
+                          className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                            selectedStyle === null
+                              ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm"
+                              : "bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                          }`}
+                        >
+                          All Styles
+                        </button>
+                        {STYLE_OPTIONS.map((style) => {
+                          const isActive = selectedStyle === style;
+                          return (
+                            <button
+                              key={style}
+                              type="button"
+                              onClick={() => handleStyleClick(style)}
+                              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                                isActive
+                                  ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm ring-2 ring-indigo-500/30"
+                                  : "bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                              }`}
+                            >
+                              {style}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Sizes (2 to 8 colors) Row */}
+                    <div className="pt-3 border-t border-zinc-800/60">
+                      <div className="flex items-center space-x-2 mb-2.5">
+                        <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                          Palette Size (2 to 8 Colors)
+                        </h3>
+                        {selectedCount && (
+                          <span className="text-[10px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">
+                            {selectedCount} Colors
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleCountClick(null)}
+                          className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                            selectedCount === null
+                              ? "bg-indigo-600 text-white font-bold shadow-sm"
+                              : "bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                          }`}
+                        >
+                          All Sizes
+                        </button>
+                        {COLOR_COUNT_OPTIONS.map((count) => {
+                          const isActive = selectedCount === count;
+                          return (
+                            <button
+                              key={count}
+                              type="button"
+                              onClick={() => handleCountClick(count)}
+                              className={`inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                                isActive
+                                  ? "bg-indigo-600 text-white font-bold shadow-sm ring-2 ring-indigo-500/30"
+                                  : "bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                              }`}
+                            >
+                              <span>{count} Colors</span>
+                              <span className="opacity-60 font-mono tracking-tighter text-[9px]">
+                                {"•".repeat(count)}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Footer note */}
+                    <div className="pt-2 flex items-center justify-between text-[11px] text-zinc-500">
+                      <span>Click any style or size badge on a palette card to filter instantly.</span>
+                      <button
+                        type="button"
+                        onClick={() => setIsFilterExpanded(false)}
+                        className="text-indigo-400 hover:underline cursor-pointer"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* Palettes Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
