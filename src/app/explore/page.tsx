@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useCallback, Suspense } from "react";
+import React, { useState, useMemo, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -14,7 +14,8 @@ import {
   SlidersHorizontal,
   Sparkles,
   RotateCcw,
-  Sliders,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { paletteToSlug } from "@/lib/url/base62";
 import {
@@ -37,7 +38,7 @@ const EXPLORE_FAQS = [
   {
     question: "How can I search and filter palettes by style, color, or size?",
     answer:
-      "Use the sticky bottom filter bar at the base of the screen, or query the instant search bar at the top. You can filter by clicking any style pill in the bottom rail, opening the full filter sheet for color count tiers (2 to 8 colors), or searching friendly color names (like 'mint', 'navy', 'lavender', 'peach', 'teal') and exact hex codes.",
+      "Click the big search bar at the top to smoothly open the filter card. Click any style or size chip to embed it directly inside the search bar. You can also type hex codes (e.g. #ff5733) or color names (e.g. mint, navy, lavender, coral) to filter instantaneously.",
   },
   {
     question: "Can I edit or customize a curated palette in the generator?",
@@ -55,6 +56,8 @@ const ITEMS_PER_PAGE = 24;
 
 function ExploreContent() {
   const searchParams = useSearchParams();
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Read initial params from URL if present
   const initialStyle = useMemo(() => {
@@ -81,7 +84,7 @@ function ExploreContent() {
   const [searchQuery, setSearchQuery] = useState<string>(initialQuery);
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
 
   // Sync state to URL smoothly without full navigation
   const syncUrl = useCallback(
@@ -126,11 +129,25 @@ function ExploreContent() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  // Keyboard shortcut: Escape to close filter sheet
+  // Click outside to collapse the slide-down filter card
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(e.target as Node)
+      ) {
+        setIsFilterOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Keyboard shortcut: Escape to close filter card
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setIsFilterDrawerOpen(false);
+        setIsFilterOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -219,6 +236,19 @@ function ExploreContent() {
     syncUrl(null, null, "", 1, true);
   };
 
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && searchQuery === "") {
+      // Remove the last selected chip when backspacing on empty input
+      if (selectedCount) {
+        handleCountClick(selectedCount);
+      } else if (selectedStyle) {
+        handleStyleClick(selectedStyle);
+      }
+    } else if (e.key === "Escape") {
+      setIsFilterOpen(false);
+    }
+  };
+
   const handleCopyPalette = (p: CuratedPalette, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -249,98 +279,272 @@ function ExploreContent() {
         className="flex-1 p-5 sm:p-6 md:p-8 max-w-7xl mx-auto w-full flex flex-col justify-between"
       >
         <div>
-          {/* Sub-Header: Title + Search */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-zinc-800/80">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-2.5">
-                <Compass className="w-6 h-6 text-indigo-400" />
-                <span>Curated Color Palettes Library</span>
-              </h1>
-              <p className="text-xs text-zinc-400 mt-1">
-                Showing {filteredPalettes.length > 0 ? (validCurrentPage - 1) * ITEMS_PER_PAGE + 1 : 0}–
-                {Math.min(validCurrentPage * ITEMS_PER_PAGE, filteredPalettes.length)} of{" "}
-                {filteredPalettes.length.toLocaleString()} curated OKLCH palettes (Page {validCurrentPage} of {totalPages})
-              </p>
-            </div>
-
-            {/* In-Body Search Bar */}
-            <div className="relative w-full md:w-80">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
-              <input
-                type="text"
-                placeholder="Search by name, hex (#ff5733), or color (mint, navy)..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="w-full pl-9 pr-8 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setCurrentPage(1);
-                    syncUrl(selectedStyle, selectedCount, "", 1, true);
-                  }}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 p-0.5"
-                  title="Clear search"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
-            </div>
+          {/* Centered Top Sub-Header */}
+          <div className="text-center max-w-2xl mx-auto mb-6 pt-2">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-zinc-100 tracking-tight flex items-center justify-center space-x-3">
+              <Compass className="w-7 h-7 sm:w-8 h-8 text-indigo-400" />
+              <span>Curated Color Palettes Library</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-zinc-400 mt-2">
+              Explore {ALL_CURATED_PALETTES.length.toLocaleString()}+ harmonic OKLCH color palettes.
+              Search by hex, color name, or click below to filter tags.
+            </p>
+            <p className="text-[11px] font-mono text-zinc-500 mt-1">
+              Showing {filteredPalettes.length > 0 ? (validCurrentPage - 1) * ITEMS_PER_PAGE + 1 : 0}–
+              {Math.min(validCurrentPage * ITEMS_PER_PAGE, filteredPalettes.length)} of{" "}
+              {filteredPalettes.length.toLocaleString()} palettes (Page {validCurrentPage} of {totalPages})
+            </p>
           </div>
 
-          {/* Active Filter Indicators Bar (if active) */}
-          {hasActiveFilters && (
-            <div className="flex flex-wrap items-center gap-2 mb-6 text-xs text-zinc-400">
-              <span className="font-medium text-zinc-300">Active Filters:</span>
+          {/* Big Central Search Bar with Embedded Filter Chips & Smooth Slide-Down Card */}
+          <div ref={searchContainerRef} className="relative w-full max-w-3xl mx-auto mb-8 z-30">
+            {/* The Big Search Bar Container */}
+            <div
+              onClick={() => {
+                searchInputRef.current?.focus();
+                setIsFilterOpen(true);
+              }}
+              className={`w-full flex flex-wrap items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3.5 rounded-2xl bg-zinc-900/95 border transition-all duration-200 shadow-xl backdrop-blur-md cursor-text ${
+                isFilterOpen
+                  ? "border-indigo-500/80 ring-2 ring-indigo-500/20 shadow-indigo-500/10"
+                  : "border-zinc-800 hover:border-zinc-700"
+              }`}
+            >
+              {/* Search Icon */}
+              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 shrink-0 mr-1" />
+
+              {/* Embedded Style Chip inside Search Bar */}
               {selectedStyle && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-950/70 border border-indigo-500/40 text-indigo-200 shadow-xs">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-950/90 border border-indigo-500/50 text-xs font-semibold text-indigo-200 shadow-sm animate-in fade-in zoom-in-95 duration-150">
                   <span>Style: <strong className="text-white">{selectedStyle}</strong></span>
                   <button
-                    onClick={() => handleStyleClick(selectedStyle)}
-                    className="hover:text-red-400 text-indigo-300 p-0.5 rounded cursor-pointer"
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleStyleClick(selectedStyle);
+                    }}
+                    className="hover:text-red-400 text-indigo-300 p-0.5 rounded cursor-pointer transition-colors"
                     title="Remove style filter"
                   >
-                    <X className="w-3 h-3" />
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </span>
               )}
+
+              {/* Embedded Size Chip inside Search Bar */}
               {selectedCount && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-950/70 border border-indigo-500/40 text-indigo-200 font-mono shadow-xs">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-indigo-950/90 border border-indigo-500/50 text-xs font-mono font-semibold text-indigo-200 shadow-sm animate-in fade-in zoom-in-95 duration-150">
                   <span>Size: <strong className="text-white">{selectedCount} Colors</strong></span>
                   <button
-                    onClick={() => handleCountClick(selectedCount)}
-                    className="hover:text-red-400 text-indigo-300 p-0.5 rounded cursor-pointer"
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCountClick(selectedCount);
+                    }}
+                    className="hover:text-red-400 text-indigo-300 p-0.5 rounded cursor-pointer transition-colors"
                     title="Remove size filter"
                   >
-                    <X className="w-3 h-3" />
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </span>
               )}
-              {searchQuery.trim() && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 shadow-xs">
-                  <span>Search: <strong className="text-white">&ldquo;{searchQuery}&rdquo;</strong></span>
+
+              {/* Input Cursor */}
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder={
+                  selectedStyle || selectedCount
+                    ? "Add keyword, hex (#ff5733), or color..."
+                    : "Search 2,100+ palettes by name, hex (#ff5733), or click to filter tags..."
+                }
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onFocus={() => setIsFilterOpen(true)}
+                onKeyDown={handleInputKeyDown}
+                className="flex-1 min-w-[160px] bg-transparent text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none py-1"
+              />
+
+              {/* Right Action Icons in Search Bar */}
+              <div className="flex items-center space-x-1.5 shrink-0 ml-auto">
+                {searchQuery && (
                   <button
-                    onClick={() => {
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setSearchQuery("");
                       setCurrentPage(1);
                       syncUrl(selectedStyle, selectedCount, "", 1, true);
                     }}
-                    className="hover:text-red-400 text-zinc-400 p-0.5 rounded cursor-pointer"
-                    title="Clear search"
+                    className="p-1 rounded-lg hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 cursor-pointer transition-colors"
+                    title="Clear search text"
                   >
-                    <X className="w-3 h-3" />
+                    <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
-                </span>
-              )}
-              <button
-                onClick={handleClearFilters}
-                className="text-xs text-indigo-400 hover:text-indigo-300 ml-1 font-semibold transition-colors cursor-pointer"
-              >
-                Clear all
-              </button>
+                )}
+
+                {/* Filter Card Toggle Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsFilterOpen((prev) => !prev);
+                  }}
+                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    isFilterOpen || activeFilterCount > 0
+                      ? "bg-indigo-600/30 text-indigo-300 border border-indigo-500/40"
+                      : "bg-zinc-800/80 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700/60"
+                  }`}
+                  title="Toggle filter tags card"
+                >
+                  <SlidersHorizontal className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Tags</span>
+                  {activeFilterCount > 0 && (
+                    <span className="w-4 h-4 rounded-full bg-indigo-600 text-white font-mono text-[9px] font-bold flex items-center justify-center">
+                      {activeFilterCount}
+                    </span>
+                  )}
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                      isFilterOpen ? "rotate-180 text-indigo-400" : ""
+                    }`}
+                  />
+                </button>
+              </div>
             </div>
-          )}
+
+            {/* Smooth Slide-Down Filter Card right below the Search Bar */}
+            <AnimatePresence>
+              {isFilterOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.99 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.99 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="absolute top-full left-0 right-0 mt-2 z-50 bg-zinc-950/95 border border-zinc-800/90 rounded-2xl p-4 sm:p-5 shadow-2xl backdrop-blur-2xl space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar"
+                >
+                  {/* Card Header */}
+                  <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80">
+                    <div className="flex items-center space-x-2">
+                      <Sparkles className="w-4 h-4 text-indigo-400" />
+                      <span className="text-xs sm:text-sm font-semibold text-zinc-200">
+                        Filter Tags (Click to add chip into search bar)
+                      </span>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      {hasActiveFilters && (
+                        <button
+                          type="button"
+                          onClick={handleClearFilters}
+                          className="text-xs text-zinc-400 hover:text-indigo-400 transition-colors cursor-pointer mr-2 flex items-center space-x-1"
+                        >
+                          <RotateCcw className="w-3 h-3" />
+                          <span>Reset</span>
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setIsFilterOpen(false)}
+                        className="text-xs text-zinc-400 hover:text-white flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700/60 transition-colors cursor-pointer"
+                      >
+                        <span>Collapse</span>
+                        <ChevronUp className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Styles Tag Cloud */}
+                  <div>
+                    <div className="flex items-center space-x-2 mb-2.5">
+                      <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                        Aesthetic Styles ({STYLE_OPTIONS.length})
+                      </h3>
+                      {selectedStyle && (
+                        <span className="text-[10px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full">
+                          Added to search
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {STYLE_OPTIONS.map((style) => {
+                        const isSelected = selectedStyle === style;
+                        return (
+                          <button
+                            key={style}
+                            type="button"
+                            onClick={() => handleStyleClick(style)}
+                            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer active:scale-95 ${
+                              isSelected
+                                ? "bg-indigo-600 text-white font-bold shadow-md shadow-indigo-600/30 ring-2 ring-indigo-500/40"
+                                : "bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white hover:bg-zinc-850"
+                            }`}
+                          >
+                            <span>{style}</span>
+                            {isSelected && <Check className="w-3 h-3 text-white" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Palette Sizes (2 to 8 Colors) Tag Cloud */}
+                  <div className="pt-3 border-t border-zinc-800/60">
+                    <div className="flex items-center space-x-2 mb-2.5">
+                      <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                        Palette Size (2 to 8 Colors)
+                      </h3>
+                      {selectedCount && (
+                        <span className="text-[10px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">
+                          Added to search
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {COLOR_COUNT_OPTIONS.map((count) => {
+                        const isSelected = selectedCount === count;
+                        return (
+                          <button
+                            key={count}
+                            type="button"
+                            onClick={() => handleCountClick(count)}
+                            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer active:scale-95 ${
+                              isSelected
+                                ? "bg-indigo-600 text-white font-bold shadow-md shadow-indigo-600/30 ring-2 ring-indigo-500/40"
+                                : "bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white hover:bg-zinc-850"
+                            }`}
+                          >
+                            <span>{count} Colors</span>
+                            <span className="opacity-60 font-mono tracking-tighter text-[9px]">
+                              {"•".repeat(count)}
+                            </span>
+                            {isSelected && <Check className="w-3 h-3 text-white" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Card Bottom Info & Done Button */}
+                  <div className="pt-2 flex items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800/60">
+                    <span>
+                      {filteredPalettes.length.toLocaleString()} matching palettes found
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setIsFilterOpen(false)}
+                      className="flex items-center space-x-1 px-3 py-1 rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 font-bold text-xs shadow-sm transition-all active:scale-95 cursor-pointer"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Done</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* Palettes Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -380,7 +584,7 @@ function ExploreContent() {
                         {p.name}
                       </h3>
 
-                      {/* Filter Badges: Style + Color Count (Replaced #tags) */}
+                      {/* Filter Badges: Style + Color Count (Click to add to search bar) */}
                       <div className="flex flex-wrap items-center gap-1.5 mb-3">
                         <button
                           type="button"
@@ -391,10 +595,10 @@ function ExploreContent() {
                           }}
                           className={`px-2.5 py-0.5 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
                             selectedStyle === p.style
-                              ? "bg-zinc-100 text-zinc-950 font-semibold"
+                              ? "bg-indigo-600 text-white font-semibold shadow-xs"
                               : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
                           }`}
-                          title={`Filter by style: ${p.style}`}
+                          title={`Add ${p.style} chip to search`}
                         >
                           {p.style}
                         </button>
@@ -408,10 +612,10 @@ function ExploreContent() {
                           }}
                           className={`px-2 py-0.5 rounded-md text-[11px] font-mono transition-all cursor-pointer ${
                             selectedCount === p.colorCount
-                              ? "bg-indigo-600 text-white font-semibold"
+                              ? "bg-indigo-600 text-white font-semibold shadow-xs"
                               : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 border border-zinc-700/50"
                           }`}
-                          title={`Filter by size: ${p.colorCount} Colors`}
+                          title={`Add ${p.colorCount} Colors chip to search`}
                         >
                           {p.colorCount} Colors
                         </button>
@@ -528,290 +732,8 @@ function ExploreContent() {
         <CollapsibleFaq items={EXPLORE_FAQS} className="mt-12" />
       </motion.main>
 
-      {/* Spacing compensation before Footer so bottom fixed bar never obscures content */}
-      <div className="pb-24 sm:pb-20">
-        <Footer />
-      </div>
-
-      {/* Slide-Up Bottom Filter Sheet Overlay */}
-      <AnimatePresence>
-        {isFilterDrawerOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              onClick={() => setIsFilterDrawerOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40"
-            />
-
-            {/* Floating Bottom Sheet */}
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 30, scale: 0.98 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="fixed bottom-[68px] sm:bottom-[72px] left-3 right-3 sm:left-6 sm:right-auto sm:w-[640px] max-h-[75vh] z-50 overflow-hidden bg-zinc-950/95 border border-zinc-800 rounded-2xl shadow-2xl backdrop-blur-2xl flex flex-col"
-            >
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between p-4 border-b border-zinc-800/80 bg-zinc-900/60">
-                <div className="flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4 text-indigo-400" />
-                  <span className="text-sm font-bold text-zinc-100">
-                    Filter Curated Palettes
-                  </span>
-                  <span className="text-xs text-zinc-400 font-mono">
-                    ({filteredPalettes.length.toLocaleString()} matching)
-                  </span>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  {hasActiveFilters && (
-                    <button
-                      type="button"
-                      onClick={handleClearFilters}
-                      className="text-xs text-zinc-400 hover:text-indigo-400 transition-colors mr-2 cursor-pointer"
-                    >
-                      Reset All
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => setIsFilterDrawerOpen(false)}
-                    className="p-1 rounded-lg hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-                    title="Close filter sheet"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Drawer Scrollable Content */}
-              <div className="overflow-y-auto p-4 sm:p-5 space-y-4 no-scrollbar">
-                {/* Aesthetic Styles */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-                      Aesthetic Style ({STYLE_OPTIONS.length})
-                    </h3>
-                    {selectedStyle && (
-                      <span className="text-[10px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full">
-                        {selectedStyle}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleStyleClick(null)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                        selectedStyle === null
-                          ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm"
-                          : "bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white"
-                      }`}
-                    >
-                      All Styles
-                    </button>
-                    {STYLE_OPTIONS.map((style) => {
-                      const isSelected = selectedStyle === style;
-                      return (
-                        <button
-                          key={style}
-                          type="button"
-                          onClick={() => handleStyleClick(style)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                            isSelected
-                              ? "bg-indigo-600 text-white font-bold shadow-md shadow-indigo-600/30 ring-2 ring-indigo-500/30"
-                              : "bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white"
-                          }`}
-                        >
-                          {style}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Palette Size (2 to 8 Colors) */}
-                <div className="pt-3 border-t border-zinc-800/70">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-                      Palette Size (2 to 8 Colors)
-                    </h3>
-                    {selectedCount && (
-                      <span className="text-[10px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">
-                        {selectedCount} Colors
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleCountClick(null)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                        selectedCount === null
-                          ? "bg-indigo-600 text-white font-bold shadow-sm"
-                          : "bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white"
-                      }`}
-                    >
-                      All Sizes
-                    </button>
-                    {COLOR_COUNT_OPTIONS.map((count) => {
-                      const isSelected = selectedCount === count;
-                      return (
-                        <button
-                          key={count}
-                          type="button"
-                          onClick={() => handleCountClick(count)}
-                          className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                            isSelected
-                              ? "bg-indigo-600 text-white font-bold shadow-md shadow-indigo-600/30 ring-2 ring-indigo-500/30"
-                              : "bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white"
-                          }`}
-                        >
-                          <span>{count} Colors</span>
-                          <span className="opacity-60 font-mono tracking-tighter text-[9px]">
-                            {"•".repeat(count)}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Drawer Bottom Action Strip */}
-              <div className="p-3 bg-zinc-900/80 border-t border-zinc-800/80 flex items-center justify-between">
-                <span className="text-[11px] text-zinc-400">
-                  Click any badge on a palette card to filter directly.
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setIsFilterDrawerOpen(false)}
-                  className="flex items-center space-x-1 px-3.5 py-1.5 rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
-                >
-                  <Check className="w-3.5 h-3.5" />
-                  <span>Apply & View</span>
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Sticky Bottom Filter Navbar (like Visualizer) */}
-      <div className="sticky bottom-0 left-0 right-0 z-40 border-t border-zinc-800/90 bg-zinc-950/95 backdrop-blur-xl px-4 sm:px-6 py-2.5 sm:py-3 shadow-2xl pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          {/* Left: Filter Trigger Button */}
-          <div className="flex items-center space-x-2 shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsFilterDrawerOpen((prev) => !prev)}
-              className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all active:scale-95 cursor-pointer shadow-sm ${
-                isFilterDrawerOpen || activeFilterCount > 0
-                  ? "bg-indigo-600 text-white shadow-indigo-600/30"
-                  : "bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700"
-              }`}
-              aria-expanded={isFilterDrawerOpen}
-              title="Open full style and size filter sheet"
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Filters</span>
-              {activeFilterCount > 0 ? (
-                <span className="w-5 h-5 rounded-full bg-white text-indigo-700 font-mono text-[10px] font-bold flex items-center justify-center">
-                  {activeFilterCount}
-                </span>
-              ) : (
-                <span className="text-[10px] text-zinc-400 font-mono hidden xl:inline">
-                  (14 Styles)
-                </span>
-              )}
-            </button>
-
-            {/* Active Filter Chips in Bottom Bar (Quick Dismiss) */}
-            {selectedStyle && (
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-500/40 text-xs text-indigo-200 shadow-sm">
-                <span>{selectedStyle}</span>
-                <button
-                  onClick={() => handleStyleClick(selectedStyle)}
-                  className="hover:text-red-400 text-indigo-300 p-0.5 rounded cursor-pointer"
-                  title="Clear style"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-            {selectedCount && (
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-500/40 text-xs text-indigo-200 font-mono shadow-sm">
-                <span>{selectedCount} Colors</span>
-                <button
-                  onClick={() => handleCountClick(selectedCount)}
-                  className="hover:text-red-400 text-indigo-300 p-0.5 rounded cursor-pointer"
-                  title="Clear size"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-          </div>
-
-          {/* Center: Horizontal Touch Rail of Popular Styles (1-tap quick filtering) */}
-          <div className="flex-1 min-w-0 overflow-x-auto no-scrollbar flex items-center gap-1.5 px-1 py-0.5 select-none">
-            <button
-              onClick={() => handleStyleClick(null)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 active:scale-95 cursor-pointer ${
-                selectedStyle === null
-                  ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm"
-                  : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
-              }`}
-            >
-              All
-            </button>
-            {STYLE_OPTIONS.map((style) => {
-              const isSelected = selectedStyle === style;
-              return (
-                <button
-                  key={style}
-                  onClick={() => handleStyleClick(style)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 active:scale-95 cursor-pointer ${
-                    isSelected
-                      ? "bg-indigo-600/25 text-indigo-300 border border-indigo-500/40 shadow-sm font-semibold"
-                      : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
-                  }`}
-                >
-                  {style}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Right: Quick Actions */}
-          <div className="flex items-center space-x-2 shrink-0">
-            {hasActiveFilters && (
-              <button
-                onClick={handleClearFilters}
-                className="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-red-400 border border-zinc-800 text-xs font-medium transition-all active:scale-95 cursor-pointer"
-                title="Reset all filters"
-              >
-                <RotateCcw className="w-3 h-3" />
-                <span>Reset</span>
-              </button>
-            )}
-
-            {/* Generator Link */}
-            <Link
-              href="/"
-              className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold active:scale-95 shadow-md shadow-indigo-600/25 transition-all cursor-pointer whitespace-nowrap"
-              title="Open Palette Generator"
-            >
-              <Sliders className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Generator</span>
-            </Link>
-          </div>
-        </div>
-      </div>
+      {/* Global Clean Footer */}
+      <Footer />
     </div>
   );
 }
