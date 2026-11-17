@@ -2,11 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import UseAnimations from "react-useanimations";
-import zap from "react-useanimations/lib/zap";
-import arrowRightAnim from "react-useanimations/lib/arrowRight";
-import explore from "react-useanimations/lib/explore";
+import { Sparkles, ArrowRight, Compass } from "lucide-react";
 
 export function CtaBannerSection() {
   const scrollToTop = () => {
@@ -14,62 +10,51 @@ export function CtaBannerSection() {
   };
 
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
+    <section className="w-full bg-zinc-950 py-12 sm:py-16 px-6 select-none border-t border-zinc-900">
       <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative rounded-3xl bg-gradient-to-tr from-zinc-900 via-zinc-900/90 to-zinc-950 border border-emerald-500/30 p-8 sm:p-14 overflow-hidden shadow-2xl text-center space-y-8"
-        >
-          {/* Subtle Ambient Glow */}
-          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-
+        <div className="rounded-3xl bg-zinc-900/80 border border-zinc-800 p-8 sm:p-12 text-center space-y-6 shadow-2xl">
           {/* Eyebrow */}
-          <div className="relative group inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider transition-colors hover:bg-emerald-500/20">
-            <UseAnimations animation={zap} size={16} strokeColor="#34d399" autoplay loop />
-            <span>Ready in Seconds • Zero Signup Required</span>
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-950 border border-zinc-800 text-emerald-400 text-xs font-mono uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Zero Signup Required • 100% In-Browser</span>
           </div>
 
           {/* Main Headline */}
-          <div className="relative space-y-3 max-w-2xl mx-auto">
+          <div className="space-y-3 max-w-2xl mx-auto">
             <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-100 tracking-tight leading-tight">
               Build your next design system in{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-                perceptual color.
-              </span>
+              <span className="text-emerald-400">perceptual color.</span>
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-              Generate harmonic palettes, audit contrast with APCA, and export production-ready tokens directly in your browser.
+              Generate harmonic palettes, verify contrast with APCA, and export production-ready tokens directly in your browser.
             </p>
           </div>
 
           {/* Action Buttons */}
-          <div className="relative flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <button
               type="button"
               onClick={scrollToTop}
-              className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-sm shadow-xl shadow-emerald-600/30 transition-all cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-semibold text-sm transition-all cursor-pointer shadow-lg shadow-emerald-600/20"
             >
               <span>Generate Palette in Workspace</span>
-              <UseAnimations animation={arrowRightAnim} size={18} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4" />
             </button>
 
             <Link
               href="/explore"
-              className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-bold text-sm transition-all cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 active:scale-95 text-zinc-200 border border-zinc-700 font-semibold text-sm transition-all cursor-pointer"
             >
-              <UseAnimations animation={explore} size={18} strokeColor="#34d399" />
+              <Compass className="w-4 h-4 text-emerald-400" />
               <span>Explore 240+ Curated Palettes</span>
             </Link>
           </div>
 
           {/* Trust Microcopy */}
-          <div className="relative text-xs text-zinc-500 pt-2">
-            Zero signup required • 100% in-browser computation • Free forever
+          <div className="text-xs font-mono text-zinc-500 pt-2">
+            Free forever • Completely client-side • MIT License
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,166 +1,178 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check, AlertCircle, Sparkles, Layers } from "lucide-react";
 import { motion } from "framer-motion";
-import UseAnimations from "react-useanimations";
-import activity from "react-useanimations/lib/activity";
-import alertTriangle from "react-useanimations/lib/alertTriangle";
-import zap from "react-useanimations/lib/zap";
-import checkmark from "react-useanimations/lib/checkmark";
-import arrowRightAnim from "react-useanimations/lib/arrowRight";
 
 export function ScienceSection() {
+  const [activeModel, setActiveModel] = useState<"oklch" | "hsl">("oklch");
+
   return (
-    <section className="w-full bg-zinc-950 py-24 sm:py-32 px-6 select-none">
-      <div className="max-w-6xl mx-auto space-y-16">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-center max-w-3xl mx-auto space-y-5"
-        >
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider shadow-sm">
-            <UseAnimations animation={activity} size={16} strokeColor="#34d399" autoplay loop />
-            <span>The Color Science Upgrade</span>
+    <section className="w-full bg-zinc-950 py-12 sm:py-16 px-6 select-none border-t border-zinc-900">
+      <div className="max-w-6xl mx-auto space-y-10">
+        {/* Section Header */}
+        <div className="max-w-3xl mx-auto text-center space-y-3">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-emerald-400 text-xs font-mono uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>The Perceptual Difference</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-100 tracking-tight leading-tight">
             Traditional color pickers distort human vision.{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-              OKLCH fixes the math.
-            </span>
+            <span className="text-emerald-400">OKLCH fixes the math.</span>
           </h2>
 
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-2xl mx-auto">
-            Standard web models like HSL and sRGB treat pure yellow and deep blue as if they share identical brightness. OKLCH models color along human retinal sensitivity, giving you balanced button states, coherent gradients, and verified contrast.
+            Legacy models like HSL and sRGB assume all hues at 50% lightness appear equally bright to humans. In reality, your eyes perceive yellow nearly four times brighter than blue. OKLCH maps color directly to the human visual cortex.
           </p>
-        </motion.div>
+        </div>
 
-        {/* 3-Card Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
-        >
-          {/* Card 1: HSL Illusion */}
-          <div className="group p-7 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between space-y-6 hover:border-amber-500/40 hover:bg-zinc-900/80 transition-all duration-300">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-sm">
-                <UseAnimations animation={alertTriangle} size={26} strokeColor="#fbbf24" autoplay loop />
+        {/* Asymmetrical 2-Column Scientific Comparator */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+          {/* Left Column: Core Insight Cards (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
+            <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
+              <div className="flex items-center space-x-2.5 text-amber-400 font-semibold text-sm">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <h3 className="font-heading font-bold text-zinc-100">The HSL Flaw</h3>
               </div>
-              <h3 className="text-lg font-bold text-zinc-100 group-hover:text-amber-300 transition-colors">
-                The HSL Fallacy
-              </h3>
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                In standard HSL, <code className="text-amber-300 font-mono text-xs">hsl(60, 100%, 50%)</code> (yellow) and <code className="text-amber-300 font-mono text-xs">hsl(240, 100%, 50%)</code> (blue) claim identical 50% lightness. Yet human eyes perceive yellow as nearly 4x brighter. HSL completely ignores retinal luminance.
+                In standard HSL, <code className="text-amber-300 font-mono text-xs">hsl(60, 100%, 50%)</code> (yellow) and <code className="text-amber-300 font-mono text-xs">hsl(240, 100%, 50%)</code> (blue) claim equal lightness. Your retina perceives yellow at ~93% luminance and blue at ~26%. HSL completely ignores perceived contrast.
               </p>
             </div>
 
-            {/* Visual demo bar */}
-            <div className="space-y-2 pt-2 border-t border-zinc-800/60">
-              <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                <span>Both L=50% in HSL</span>
-                <span className="text-amber-400 font-bold">4x Brightness Delta</span>
+            <div className="p-6 rounded-2xl bg-zinc-900/60 border border-emerald-500/30 space-y-3">
+              <div className="flex items-center space-x-2.5 text-emerald-400 font-semibold text-sm">
+                <Check className="w-4 h-4 shrink-0" />
+                <h3 className="font-heading font-bold text-zinc-100">The OKLCH Solution</h3>
               </div>
-              <div className="h-7 rounded-xl overflow-hidden flex shadow-inner">
-                <div className="w-1/2 bg-[#ffee00] flex items-center justify-center text-[10px] font-bold text-zinc-900 font-mono">
-                  Yellow (93% L)
-                </div>
-                <div className="w-1/2 bg-[#0000ff] flex items-center justify-center text-[10px] font-bold text-white font-mono">
-                  Blue (26% L)
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: The OKLCH Standard */}
-          <div className="group p-7 rounded-3xl bg-gradient-to-b from-zinc-900/90 to-zinc-900/40 border border-emerald-500/30 flex flex-col justify-between space-y-6 shadow-xl shadow-emerald-500/5 hover:border-emerald-500/60 hover:bg-zinc-900/90 transition-all duration-300">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-sm shadow-emerald-500/10">
-                <UseAnimations animation={zap} size={26} strokeColor="#34d399" autoplay loop />
-              </div>
-              <h3 className="text-lg font-bold text-zinc-100 flex items-center space-x-2 group-hover:text-emerald-300 transition-colors">
-                <span>The OKLCH Standard</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold">
-                  Human Vision
-                </span>
-              </h3>
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                Developed by Björn Ottosson, OKLCH aligns with biological human vision. An OKLCH lightness value of <code className="text-emerald-400 font-mono text-xs">0.70</code> delivers identical perceived brightness across every hue, from radiant cyan to deep magenta.
+                Developed by Björn Ottosson, OKLCH normalizes lightness across all 360 degrees of hue. An OKLCH lightness value of <code className="text-emerald-400 font-mono text-xs">0.70</code> produces identical perceived brightness whether the color is pure emerald, electric cyan, or deep ruby.
               </p>
             </div>
 
-            {/* Visual demo bar */}
-            <div className="space-y-2 pt-2 border-t border-emerald-500/20">
-              <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                <span>Constant L=0.70 in OKLCH</span>
-                <span className="text-emerald-400 font-bold">100% Uniform</span>
+            <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
+              <div className="flex items-center space-x-2.5 text-zinc-300 font-semibold text-sm">
+                <Layers className="w-4 h-4 shrink-0 text-zinc-400" />
+                <h3 className="font-heading font-bold text-zinc-100">Native CSS Level 4</h3>
               </div>
-              <div className="h-7 rounded-xl overflow-hidden flex shadow-inner">
-                <div className="flex-1 bg-[oklch(0.70_0.22_150)] flex items-center justify-center text-[9px] font-bold text-zinc-900 font-mono">
-                  Green
-                </div>
-                <div className="flex-1 bg-[oklch(0.70_0.22_220)] flex items-center justify-center text-[9px] font-bold text-zinc-900 font-mono">
-                  Cyan
-                </div>
-                <div className="flex-1 bg-[oklch(0.70_0.22_320)] flex items-center justify-center text-[9px] font-bold text-white font-mono">
-                  Pink
-                </div>
-                <div className="flex-1 bg-[oklch(0.70_0.22_40)] flex items-center justify-center text-[9px] font-bold text-zinc-900 font-mono">
-                  Orange
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Native CSS Support */}
-          <div className="group p-7 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 flex flex-col justify-between space-y-6 hover:border-cyan-500/40 hover:bg-zinc-900/80 transition-all duration-300">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-sm">
-                <UseAnimations animation={checkmark} size={26} strokeColor="#22d3ee" autoplay loop />
-              </div>
-              <h3 className="text-lg font-bold text-zinc-100 group-hover:text-cyan-300 transition-colors">
-                Native CSS Support
-              </h3>
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                CSS Color Module Level 4 is natively supported in Chrome, Safari, Firefox, and Edge. Write <code className="text-cyan-300 font-mono text-xs">color: oklch(0.7 0.18 150)</code> today with zero runtime JavaScript overhead or polyfills.
+                Natively supported across all modern browsers. Write <code className="text-zinc-200 font-mono text-xs">color: oklch(0.7 0.18 150)</code> directly in your stylesheets without JavaScript polyfills or build-time overhead.
               </p>
             </div>
+          </div>
 
-            {/* Code Snippet Box */}
-            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800/80 font-mono text-[11px] text-zinc-300 space-y-1">
-              <div className="text-zinc-500 text-[10px]">/* Native CSS Color 4 */</div>
-              <div><span className="text-cyan-400">--brand-primary</span>: <span className="text-emerald-400">oklch</span>(0.72 0.19 160);</div>
-              <div><span className="text-cyan-400">--brand-accent</span>: <span className="text-emerald-400">oklch</span>(0.72 0.22 350);</div>
+          {/* Right Column: Interactive Diagnostic Workbench (7 cols) */}
+          <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-6 shadow-xl">
+            {/* Top Bar with Model Switcher */}
+            <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+              <div className="space-y-0.5">
+                <span className="text-xs font-mono text-zinc-400 uppercase tracking-wider">Perceptual Luminance Test</span>
+                <div className="text-sm font-bold text-zinc-100">
+                  {activeModel === "oklch" ? "OKLCH: Uniform Human Luminance" : "HSL: Severe Luminance Distortion"}
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-1 p-1 rounded-xl bg-zinc-950 border border-zinc-800">
+                <button
+                  type="button"
+                  onClick={() => setActiveModel("oklch")}
+                  className={`px-3 py-1 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+                    activeModel === "oklch"
+                      ? "bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/40"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
+                >
+                  OKLCH
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveModel("hsl")}
+                  className={`px-3 py-1 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+                    activeModel === "hsl"
+                      ? "bg-amber-500/20 text-amber-400 font-bold border border-amber-500/40"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
+                >
+                  Legacy HSL
+                </button>
+              </div>
+            </div>
+
+            {/* Visualizer Display Area */}
+            {activeModel === "oklch" ? (
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
+                    <span>Hue distribution at L=0.72 (Constant Lightness)</span>
+                    <span className="text-emerald-400 font-bold">ΔL = 0.00 (Zero Drift)</span>
+                  </div>
+                  <div className="h-12 rounded-xl overflow-hidden flex shadow-inner border border-zinc-800">
+                    <div className="flex-1 bg-[oklch(0.72_0.20_145)] flex items-center justify-center text-[10px] font-mono font-bold text-zinc-950">
+                      Mint 72%
+                    </div>
+                    <div className="flex-1 bg-[oklch(0.72_0.20_210)] flex items-center justify-center text-[10px] font-mono font-bold text-zinc-950">
+                      Teal 72%
+                    </div>
+                    <div className="flex-1 bg-[oklch(0.72_0.20_280)] flex items-center justify-center text-[10px] font-mono font-bold text-zinc-950">
+                      Blue 72%
+                    </div>
+                    <div className="flex-1 bg-[oklch(0.72_0.20_340)] flex items-center justify-center text-[10px] font-mono font-bold text-zinc-950">
+                      Rose 72%
+                    </div>
+                    <div className="flex-1 bg-[oklch(0.72_0.20_50)] flex items-center justify-center text-[10px] font-mono font-bold text-zinc-950">
+                      Amber 72%
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800/80 space-y-2">
+                  <div className="text-xs font-mono text-zinc-400">Why this matters for your UI:</div>
+                  <p className="text-xs text-zinc-300 leading-relaxed">
+                    When you swap accent colors in OKLCH, contrast against background surfaces remains completely invariant. You never need to recalculate text contrast or adjust border opacities when switching brand themes.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
+                    <span>Nominal L=50% in HSL (Human Retina Perception)</span>
+                    <span className="text-amber-400 font-bold">ΔL = 67% (Severe Clashing)</span>
+                  </div>
+                  <div className="h-12 rounded-xl overflow-hidden flex shadow-inner border border-zinc-800">
+                    <div className="w-1/2 bg-[#ffff00] flex items-center justify-center text-[11px] font-mono font-bold text-zinc-950">
+                      Yellow (Perceived 93%)
+                    </div>
+                    <div className="w-1/2 bg-[#0000ff] flex items-center justify-center text-[11px] font-mono font-bold text-white">
+                      Blue (Perceived 26%)
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800/80 space-y-2">
+                  <div className="text-xs font-mono text-zinc-400">The Problem in Production:</div>
+                  <p className="text-xs text-zinc-300 leading-relaxed">
+                    White text passes on blue with an 8.6:1 ratio, but fails catastrophically on yellow with an unreadable 1.1:1 ratio—even though both colors claim &quot;50% Lightness&quot; in HSL.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Bottom Action Strip */}
+            <div className="pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-xs text-zinc-400">Audit your current brand colors with WCAG AAA &amp; APCA</span>
+              <Link
+                href="/contrast"
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-all cursor-pointer group"
+              >
+                <span>Audit Contrast with APCA</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
-        </motion.div>
-
-        {/* Section Action Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-5 p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 shadow-lg"
-        >
-          <div className="text-xs sm:text-sm text-zinc-300 text-center sm:text-left">
-            Audit your palette for WCAG 2.1 AAA and APCA contrast thresholds.
-          </div>
-          <Link
-            href="/contrast"
-            className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition-all cursor-pointer whitespace-nowrap group"
-          >
-            <span>Audit Contrast with APCA</span>
-            <UseAnimations animation={arrowRightAnim} size={16} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
