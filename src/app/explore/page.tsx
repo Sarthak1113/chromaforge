@@ -11,8 +11,6 @@ import {
   ChevronRight,
   Compass,
   X,
-  SlidersHorizontal,
-  ChevronDown,
 } from "lucide-react";
 import { paletteToSlug } from "@/lib/url/base62";
 import {
@@ -363,8 +361,8 @@ function ExploreContent() {
               />
 
               {/* Right Action Icons in Search Bar */}
-              <div className="flex items-center space-x-1.5 shrink-0 ml-auto">
-                {searchQuery && (
+              {searchQuery && (
+                <div className="flex items-center shrink-0 ml-auto">
                   <button
                     type="button"
                     onClick={(e) => {
@@ -378,36 +376,8 @@ function ExploreContent() {
                   >
                     <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
-                )}
-
-                {/* Filter Card Toggle Button */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsFilterOpen((prev) => !prev);
-                  }}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    isFilterOpen || activeFilterCount > 0
-                      ? "bg-indigo-600/30 text-indigo-300 border border-indigo-500/40"
-                      : "bg-zinc-800/80 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700/60"
-                  }`}
-                  title="Toggle filter tags card"
-                >
-                  <SlidersHorizontal className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Tags</span>
-                  {activeFilterCount > 0 && (
-                    <span className="w-4 h-4 rounded-full bg-indigo-600 text-white font-mono text-[9px] font-bold flex items-center justify-center">
-                      {activeFilterCount}
-                    </span>
-                  )}
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      isFilterOpen ? "rotate-180 text-indigo-400" : ""
-                    }`}
-                  />
-                </button>
-              </div>
+                </div>
+              )}
             </div>
 
             {/* Smooth Slide-Down Filter Card right below the Search Bar */}
