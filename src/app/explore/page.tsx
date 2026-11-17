@@ -149,6 +149,33 @@ function ExploreContent() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Dynamic SEO title & self-referencing canonical URL for Google/Bing indexing
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    if (selectedStyle && selectedCount) {
+      document.title = `${selectedStyle} (${selectedCount} Colors) Palettes — Color-Mint`;
+    } else if (selectedStyle) {
+      document.title = `${selectedStyle} Color Palettes — Curated OKLCH Library | Color-Mint`;
+    } else if (selectedCount) {
+      document.title = `${selectedCount}-Color Palettes — Curated OKLCH Library | Color-Mint`;
+    } else {
+      document.title = "Curated Color Palettes Library — 2,100+ Harmonic Palettes | Color-Mint";
+    }
+
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+      const params = new URLSearchParams();
+      if (selectedStyle) params.set("style", selectedStyle.toLowerCase());
+      if (selectedCount) params.set("colors", selectedCount.toString());
+      const qs = params.toString();
+      const targetUrl = qs
+        ? `https://color-mint.sarthakranjanhota.site/explore?${qs}`
+        : "https://color-mint.sarthakranjanhota.site/explore";
+      canonicalLink.setAttribute("href", targetUrl);
+    }
+  }, [selectedStyle, selectedCount]);
+
   // Multi-vector Filtering across 2,100 palettes
   const filteredPalettes = useMemo(() => {
     const cleanQ = searchQuery.toLowerCase().trim().replace(/^#/, "");
