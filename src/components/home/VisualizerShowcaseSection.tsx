@@ -43,7 +43,7 @@ export function VisualizerShowcaseSection() {
           </h2>
 
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-2xl mx-auto">
-            A primary accent might look stunning in isolation, but fail completely when applied to a data table header or a pill button. Color-Mint pressure-tests your palette against live components in real time.
+            A primary accent might look balanced in isolation, but fail on an active button or navigation pill. Test your primary, surface, and semantic colors against realistic UI layouts in real time.
           </p>
         </motion.div>
 
@@ -171,7 +171,7 @@ export function VisualizerShowcaseSection() {
             href="/visualizer"
             className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-600/25 transition-all cursor-pointer group"
           >
-            <span>Try Interactive Visualizer on Full Screens</span>
+            <span>Preview Components in Full-Screen Visualizer</span>
             <UseAnimations animation={arrowRightAnim} size={16} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>

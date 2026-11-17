@@ -33,6 +33,7 @@ next-env.d.ts
 
 # agents & local scratch
 .agents/
+.mcp.json
 
 # SQLite databases
 *.db

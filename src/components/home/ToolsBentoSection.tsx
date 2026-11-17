@@ -67,12 +67,12 @@ export function ToolsBentoSection() {
                   Contrast Checker
                 </h3>
                 <p className="text-xs sm:text-sm font-semibold text-indigo-400 mt-1">
-                  WCAG 2.1 AAA &amp; APCA Compliance Without Guesswork
+                  WCAG 2.1 AAA &amp; APCA Compliance
                 </p>
               </div>
 
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                Calculate relative luminance ratios for normal and large typography in real-time. Toggle between traditional WCAG 4.5:1 ratios and modern spatial-frequency APCA scores that account for font weight, size, and dark-mode polarity.
+                Calculate relative luminance ratios for normal and large typography in real time. Switch between traditional WCAG 4.5:1 ratios and modern spatial-frequency APCA scores that account for font weight, size, and dark-mode polarity.
               </p>
             </div>
 
@@ -89,7 +89,7 @@ export function ToolsBentoSection() {
                 href="/contrast"
                 className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-semibold border border-zinc-700/80 transition-all hover:text-white cursor-pointer group/btn"
               >
-                <span>Launch Checker</span>
+                <span>Launch Contrast Checker</span>
                 <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#ffffff" className="group-hover/btn:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -112,12 +112,12 @@ export function ToolsBentoSection() {
                   Gradient Studio
                 </h3>
                 <p className="text-xs sm:text-sm font-semibold text-teal-400 mt-1">
-                  Kill the Gray Dead Zone forever
+                  Eliminate midtone desaturation
                 </p>
               </div>
 
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                When standard gradients cross opposite hues in sRGB, they collapse into lifeless gray. Color-Mint curves transitions along polar Bézier splines and Voronoi noise in OKLCH, keeping midpoints lush and vibrant.
+                When standard gradients cross opposite hues in sRGB, they collapse into muddy gray. Color-Mint interpolates along polar Bézier splines in OKLCH, keeping midpoints vibrant and saturation intact.
               </p>
             </div>
 
@@ -130,7 +130,7 @@ export function ToolsBentoSection() {
                   href="/gradients"
                   className="flex items-center space-x-1.5 text-xs font-semibold text-teal-400 hover:text-teal-300 transition-colors group/link"
                 >
-                  <span>Open Studio</span>
+                  <span>Launch Gradient Studio</span>
                   <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#2dd4bf" className="group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -154,12 +154,12 @@ export function ToolsBentoSection() {
                   Palette Visualizer
                 </h3>
                 <p className="text-xs sm:text-sm font-semibold text-cyan-400 mt-1">
-                  Preview tokens on real interfaces
+                  Preview tokens across realistic UI components
                 </p>
               </div>
 
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                Never ship an unreadable UI again. Map your swatches directly into live SaaS analytics dashboards, mobile interfaces, typography scales, and brand identity mockups before pushing code.
+                Test how your primary, surface, and semantic colors interact before writing code. Map tokens directly into live SaaS analytics dashboards, mobile layouts, and typography hierarchies.
               </p>
             </div>
 
@@ -167,7 +167,7 @@ export function ToolsBentoSection() {
               href="/visualizer"
               className="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-950 border border-zinc-800/80 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all group/btn"
             >
-              <span>Test on Live UI Mockups</span>
+              <span>Launch UI Visualizer</span>
               <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#22d3ee" className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -237,7 +237,7 @@ export function ToolsBentoSection() {
               href="/explore"
               className="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-950 border border-zinc-800/80 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all group/btn"
             >
-              <span>Browse 240+</span>
+              <span>Explore Curated Library</span>
               <UseAnimations animation={arrowRightAnim} size={15} strokeColor="#c084fc" className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
           </div>

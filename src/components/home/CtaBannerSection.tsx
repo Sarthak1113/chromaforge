@@ -35,13 +35,13 @@ export function CtaBannerSection() {
           {/* Main Headline */}
           <div className="relative space-y-3 max-w-2xl mx-auto">
             <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-100 tracking-tight leading-tight">
-              Design faster. Build smarter.{" "}
+              Build your next design system in{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-                Ship in vibrant color.
+                perceptual color.
               </span>
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-              Join thousands of product designers, design engineers, and creative developers who have upgraded their color workflow to Color-Mint.
+              Generate harmonic palettes, audit contrast with APCA, and export production-ready tokens directly in your browser.
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export function CtaBannerSection() {
               onClick={scrollToTop}
               className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-sm shadow-xl shadow-emerald-600/30 transition-all cursor-pointer"
             >
-              <span>Launch Color-Mint Workspace</span>
+              <span>Generate Palette in Workspace</span>
               <UseAnimations animation={arrowRightAnim} size={18} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -61,13 +61,13 @@ export function CtaBannerSection() {
               className="group w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-4 rounded-2xl bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-bold text-sm transition-all cursor-pointer"
             >
               <UseAnimations animation={explore} size={18} strokeColor="#34d399" />
-              <span>Explore Curated Schemes</span>
+              <span>Explore 240+ Curated Palettes</span>
             </Link>
           </div>
 
           {/* Trust Microcopy */}
           <div className="relative text-xs text-zinc-500 pt-2">
-            Free forever • Crafted with precision by Sarthak Ranjan Hota
+            Zero signup required • 100% in-browser computation • Free forever
           </div>
         </motion.div>
       </div>

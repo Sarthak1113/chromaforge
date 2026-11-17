@@ -75,7 +75,7 @@ export function ComparisonTableSection() {
           </h2>
 
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-            See why leading digital product designers, design system engineers, and frontend developers choose Color-Mint over outdated hex tools.
+            A direct technical comparison between perceptual OKLCH color engineering and legacy sRGB generators.
           </p>
         </motion.div>
 

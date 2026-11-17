@@ -73,7 +73,7 @@ export function DeveloperHandoffSection() {
           </h2>
 
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-2xl mx-auto">
-            Whether you are configuring Tailwind CSS v4&apos;s new <code className="text-emerald-300 font-mono text-xs">@theme</code> directive, setting up CSS Custom Properties for an enterprise design system, or dropping SVG vector swatches into Figma, Color-Mint generates pristine production syntax.
+            Whether you are configuring Tailwind CSS v4&apos;s new <code className="text-emerald-300 font-mono text-xs">@theme</code> directive, setting up CSS Custom Properties for a design system, or sharing a Base62 URL, Color-Mint outputs production syntax with one click.
           </p>
         </motion.div>
 
@@ -185,7 +185,7 @@ export function DeveloperHandoffSection() {
             href="/"
             className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/25 transition-all cursor-pointer group"
           >
-            <span>Open Generator &amp; Export All Tokens</span>
+            <span>Export Full Palette in Generator</span>
             <UseAnimations animation={arrowRightAnim} size={16} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>

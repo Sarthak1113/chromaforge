@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSetAtom, useAtomValue } from "jotai";
 import {
   generatePaletteAtom,
@@ -34,7 +34,8 @@ import { VisualizerShowcaseSection } from "@/components/home/VisualizerShowcaseS
 import { DeveloperHandoffSection } from "@/components/home/DeveloperHandoffSection";
 import { ComparisonTableSection } from "@/components/home/ComparisonTableSection";
 import { CtaBannerSection } from "@/components/home/CtaBannerSection";
-import { Sparkles, SlidersHorizontal } from "lucide-react";
+import { Sparkles, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const generatePalette = useSetAtom(generatePaletteAtom);
@@ -51,6 +52,16 @@ export default function Home() {
   const setAdjusterOpen = useSetAtom(isAdjusterModalOpenAtom);
   const setAdjusterTarget = useSetAtom(adjusterTargetColorIdAtom);
   const setIsThemeSettingsOpen = useSetAtom(isThemeSettingsSheetOpenAtom);
+
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsAtTop(window.scrollY < 80);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Global spacebar and keyboard shortcut handler
   useEffect(() => {
@@ -152,26 +163,68 @@ export default function Home() {
         <WorkspaceToolbar />
         <PaletteBoard />
 
-        {/* Mobile Floating Action Bar (Generate + Tune) */}
-        <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 select-none">
-          <button
-            onClick={() => generatePalette()}
-            className="flex items-center space-x-2 px-5 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-2xl shadow-emerald-600/50 border border-emerald-400/30 transition-all cursor-pointer"
-            title="Generate New Palette"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>Generate</span>
-          </button>
+        {/* Desktop Floating Precision & Shortcuts Pill */}
+        <AnimatePresence>
+          {isAtTop && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 16 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="hidden lg:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-30 items-center gap-3.5 px-4.5 py-2.5 rounded-full bg-zinc-950/85 border border-zinc-800/80 backdrop-blur-md shadow-2xl text-xs font-mono text-zinc-300 pointer-events-auto select-none"
+            >
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="font-semibold text-emerald-400">OKLCH Engine</span>
+              </div>
+              <span className="text-zinc-700">|</span>
+              <span className="text-zinc-400">
+                Press <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-200 font-bold text-[10px]">Space</kbd> to generate • <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-200 font-bold text-[10px]">1-8</kbd> to lock
+              </span>
+              <span className="text-zinc-700">|</span>
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+                className="flex items-center gap-1 text-[11px] font-semibold text-zinc-400 hover:text-emerald-400 transition-colors cursor-pointer"
+                title="Scroll down to explore features"
+              >
+                <span>Explore Suite</span>
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-          <button
-            onClick={() => setIsThemeSettingsOpen(true)}
-            className="flex items-center space-x-1.5 px-4 py-3 rounded-full bg-zinc-900/95 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-semibold text-xs shadow-xl backdrop-blur-xl transition-all cursor-pointer"
-            title="Theme & Engine Settings"
-          >
-            <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Tune</span>
-          </button>
-        </div>
+        {/* Mobile Floating Action Bar (Generate + Tune) */}
+        <AnimatePresence>
+          {isAtTop && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 16 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 select-none"
+            >
+              <button
+                onClick={() => generatePalette()}
+                className="flex items-center space-x-2 px-5 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-2xl shadow-emerald-600/50 border border-emerald-400/30 transition-all cursor-pointer"
+                title="Generate New Palette"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Generate</span>
+              </button>
+
+              <button
+                onClick={() => setIsThemeSettingsOpen(true)}
+                className="flex items-center space-x-1.5 px-4 py-3 rounded-full bg-zinc-900/95 hover:bg-zinc-800 active:scale-95 text-zinc-200 border border-zinc-700/80 font-semibold text-xs shadow-xl backdrop-blur-xl transition-all cursor-pointer"
+                title="Theme & Engine Settings"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Tune</span>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Conversion-Optimized Content Sections */}

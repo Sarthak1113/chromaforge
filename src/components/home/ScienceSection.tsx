@@ -29,14 +29,14 @@ export function ScienceSection() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-100 tracking-tight leading-tight">
-            Your old color picker is mathematically broken.{" "}
+            Traditional color pickers distort human vision.{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-              Here&apos;s why.
+              OKLCH fixes the math.
             </span>
           </h2>
 
           <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-2xl mx-auto">
-            Traditional web color models like HSL and sRGB treat pure yellow and deep blue as if they share the same brightness. The result? Muddy gradients, inaccessible button states, and clashing visual hierarchies.
+            Standard web models like HSL and sRGB treat pure yellow and deep blue as if they share identical brightness. OKLCH models color along human retinal sensitivity, giving you balanced button states, coherent gradients, and verified contrast.
           </p>
         </motion.div>
 
@@ -92,7 +92,7 @@ export function ScienceSection() {
                 </span>
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                Developed by Björn Ottosson, OKLCH aligns with human visual perception. An OKLCH lightness value of <code className="text-emerald-400 font-mono text-xs">0.70</code> delivers identical perceived brightness across every single hue—from radiant cyan to deep magenta.
+                Developed by Björn Ottosson, OKLCH aligns with biological human vision. An OKLCH lightness value of <code className="text-emerald-400 font-mono text-xs">0.70</code> delivers identical perceived brightness across every hue, from radiant cyan to deep magenta.
               </p>
             </div>
 
@@ -151,13 +151,13 @@ export function ScienceSection() {
           className="flex flex-col sm:flex-row items-center justify-between gap-5 p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 shadow-lg"
         >
           <div className="text-xs sm:text-sm text-zinc-300 text-center sm:text-left">
-            Ready to audit your current brand colors for true human readability?
+            Audit your palette for WCAG 2.1 AAA and APCA contrast thresholds.
           </div>
           <Link
             href="/contrast"
             className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition-all cursor-pointer whitespace-nowrap group"
           >
-            <span>Test Contrast with APCA</span>
+            <span>Audit Contrast with APCA</span>
             <UseAnimations animation={arrowRightAnim} size={16} strokeColor="#ffffff" className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
