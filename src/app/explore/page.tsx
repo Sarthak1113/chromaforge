@@ -1,10 +1,16 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useCallback, Suspense } from "react";
 import Link from "next/link";
-import { Search, Copy, Check, ChevronLeft, ChevronRight, Compass } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Search, Copy, Check, ChevronLeft, ChevronRight, Compass, X, SlidersHorizontal, Sparkles } from "lucide-react";
 import { paletteToSlug } from "@/lib/url/base62";
-import { ALL_CURATED_PALETTES, CuratedPalette } from "@/lib/colors/presets";
+import {
+  ALL_CURATED_PALETTES,
+  STYLE_OPTIONS,
+  COLOR_COUNT_OPTIONS,
+  CuratedPalette,
+} from "@/lib/colors/presets";
 import { Navbar } from "@/components/common/Navbar";
 import { Footer } from "@/components/common/Footer";
 import { CollapsibleFaq } from "@/components/common/CollapsibleFaq";
@@ -12,14 +18,14 @@ import { motion } from "framer-motion";
 
 const EXPLORE_FAQS = [
   {
-    question: "How are the 240+ curated color palettes generated?",
+    question: "How are the 2,100+ curated color palettes generated?",
     answer:
-      "Every curated palette in Color-Mint is mathematically balanced in the OKLCH color space. Our design team curated palettes across diverse aesthetic moods (such as Cyberpunk, Sunset, Pastel, Minimal, and Earthy) ensuring consistent perceptual brightness and WCAG-compliant contrast.",
+      "Every curated palette in Color-Mint is mathematically balanced in the OKLCH color space. Palettes span 14 distinct aesthetic styles (such as Warm, Cold, Bright, Dark, Pastel, Vintage, Monochromatic, Gradient, Rainbow, Neon, Earthy, Minimal, Luxury, and Sunset) and 7 size tiers (2 to 8 colors), ensuring consistent perceptual brightness and WCAG-compliant contrast.",
   },
   {
-    question: "How can I search and filter palettes by mood or color?",
+    question: "How can I search and filter palettes by style, color, or size?",
     answer:
-      "Use the in-page search bar at the top of the directory. You can query palettes by aesthetic theme (e.g., 'neon', 'vintage', 'warm'), by tag, or by typing a specific hex color code to find palettes featuring that shade.",
+      "Use the interactive Styles and Palette Size filter pills at the top, or query the instant search bar. You can search by palette name, style, color count (e.g. '5 colors'), friendly color names (like 'mint', 'navy', 'lavender', 'peach', 'teal'), or exact hex codes (e.g. '#22c55e').",
   },
   {
     question: "Can I edit or customize a curated palette in the generator?",
@@ -35,22 +41,120 @@ const EXPLORE_FAQS = [
 
 const ITEMS_PER_PAGE = 24;
 
-export default function ExplorePage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+function ExploreContent() {
+  const searchParams = useSearchParams();
+
+  // Read initial params from URL if present
+  const initialStyle = useMemo(() => {
+    const s = searchParams.get("style");
+    if (!s) return null;
+    return STYLE_OPTIONS.find((opt) => opt.toLowerCase() === s.toLowerCase()) || null;
+  }, [searchParams]);
+
+  const initialCount = useMemo(() => {
+    const c = searchParams.get("colors");
+    if (!c) return null;
+    const num = parseInt(c, 10);
+    return COLOR_COUNT_OPTIONS.includes(num as any) ? num : null;
+  }, [searchParams]);
+
+  const initialQuery = useMemo(() => searchParams.get("q") || "", [searchParams]);
+  const initialPage = useMemo(() => {
+    const p = searchParams.get("page");
+    return p ? Math.max(1, parseInt(p, 10) || 1) : 1;
+  }, [searchParams]);
+
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(initialStyle);
+  const [selectedCount, setSelectedCount] = useState<number | null>(initialCount);
+  const [searchQuery, setSearchQuery] = useState<string>(initialQuery);
+  const [currentPage, setCurrentPage] = useState<number>(initialPage);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // Filter across all 240 palettes
+  // Sync state to URL smoothly without full navigation
+  const syncUrl = useCallback(
+    (style: string | null, count: number | null, query: string, page: number, push = false) => {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams();
+      if (style) params.set("style", style.toLowerCase());
+      if (count) params.set("colors", count.toString());
+      if (query.trim()) params.set("q", query.trim());
+      if (page > 1) params.set("page", page.toString());
+
+      const qs = params.toString();
+      const newPath = qs ? `/explore?${qs}` : "/explore";
+
+      if (push) {
+        window.history.pushState(null, "", newPath);
+      } else {
+        window.history.replaceState(null, "", newPath);
+      }
+    },
+    []
+  );
+
+  // Handle browser Back / Forward popstate
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get("style");
+      const c = params.get("colors");
+      const q = params.get("q");
+      const p = params.get("page");
+
+      setSelectedStyle(
+        s ? STYLE_OPTIONS.find((opt) => opt.toLowerCase() === s.toLowerCase()) || null : null
+      );
+      setSelectedCount(c ? parseInt(c, 10) || null : null);
+      setSearchQuery(q || "");
+      setCurrentPage(p ? parseInt(p, 10) || 1 : 1);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  // Multi-vector Filtering across 2,100 palettes
   const filteredPalettes = useMemo(() => {
-    if (!searchQuery.trim()) return ALL_CURATED_PALETTES;
-    const q = searchQuery.toLowerCase().trim();
-    return ALL_CURATED_PALETTES.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.tags.some((t) => t.toLowerCase().includes(q)) ||
-        p.colors.some((c) => c.toLowerCase().includes(q))
-    );
-  }, [searchQuery]);
+    const cleanQ = searchQuery.toLowerCase().trim().replace(/^#/, "");
+
+    return ALL_CURATED_PALETTES.filter((p) => {
+      // 1. Style Filter
+      if (selectedStyle && p.style.toLowerCase() !== selectedStyle.toLowerCase()) {
+        return false;
+      }
+
+      // 2. Color Count Filter
+      if (selectedCount && p.colorCount !== selectedCount) {
+        return false;
+      }
+
+      // 3. Search Query Filter (name, style, hex, color name, count)
+      if (cleanQ) {
+        const matchesName = p.name.toLowerCase().includes(cleanQ);
+        const matchesStyle = p.style.toLowerCase().includes(cleanQ);
+        const matchesHex = p.colors.some((hex) =>
+          hex.toLowerCase().replace("#", "").includes(cleanQ)
+        );
+        const matchesColorName = p.colorNames.some((name) =>
+          name.toLowerCase().includes(cleanQ)
+        );
+        const matchesCount =
+          cleanQ.includes("color") && cleanQ.includes(p.colorCount.toString());
+
+        if (
+          !matchesName &&
+          !matchesStyle &&
+          !matchesHex &&
+          !matchesColorName &&
+          !matchesCount
+        ) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [selectedStyle, selectedCount, searchQuery]);
 
   // Pagination calculations
   const totalPages = Math.max(1, Math.ceil(filteredPalettes.length / ITEMS_PER_PAGE));
@@ -61,9 +165,34 @@ export default function ExplorePage() {
     return filteredPalettes.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredPalettes, validCurrentPage]);
 
+  // Event handlers with smooth URL sync
+  const handleStyleClick = (style: string | null) => {
+    const nextStyle = selectedStyle === style ? null : style;
+    setSelectedStyle(nextStyle);
+    setCurrentPage(1);
+    syncUrl(nextStyle, selectedCount, searchQuery, 1, true);
+  };
+
+  const handleCountClick = (count: number | null) => {
+    const nextCount = selectedCount === count ? null : count;
+    setSelectedCount(nextCount);
+    setCurrentPage(1);
+    syncUrl(selectedStyle, nextCount, searchQuery, 1, true);
+  };
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset to first page on search
+    const q = e.target.value;
+    setSearchQuery(q);
+    setCurrentPage(1);
+    syncUrl(selectedStyle, selectedCount, q, 1, false);
+  };
+
+  const handleClearFilters = () => {
+    setSelectedStyle(null);
+    setSelectedCount(null);
+    setSearchQuery("");
+    setCurrentPage(1);
+    syncUrl(null, null, "", 1, true);
   };
 
   const handleCopyPalette = (p: CuratedPalette, e: React.MouseEvent) => {
@@ -76,12 +205,15 @@ export default function ExplorePage() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    syncUrl(selectedStyle, selectedCount, searchQuery, page, true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const hasActiveFilters = Boolean(selectedStyle || selectedCount || searchQuery.trim());
+
   return (
     <div className="min-h-screen w-full bg-zinc-950 text-zinc-100 flex flex-col select-none">
-      {/* Top Global Navbar - 100% Consistent across all pages */}
+      {/* Top Global Navbar */}
       <Navbar activePage="explore" />
 
       {/* Main Body Content with Entrance Animation */}
@@ -89,11 +221,11 @@ export default function ExplorePage() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full flex flex-col justify-between"
+        className="flex-1 p-5 sm:p-6 md:p-8 max-w-7xl mx-auto w-full flex flex-col justify-between"
       >
         <div>
-          {/* Body Sub-Header: Title + Search */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-zinc-800/80">
+          {/* Sub-Header: Title + Search */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-zinc-800/80">
             <div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-100 tracking-tight flex items-center space-x-2.5">
                 <Compass className="w-6 h-6 text-indigo-400" />
@@ -102,7 +234,7 @@ export default function ExplorePage() {
               <p className="text-xs text-zinc-400 mt-1">
                 Showing {filteredPalettes.length > 0 ? (validCurrentPage - 1) * ITEMS_PER_PAGE + 1 : 0}–
                 {Math.min(validCurrentPage * ITEMS_PER_PAGE, filteredPalettes.length)} of{" "}
-                {filteredPalettes.length} curated OKLCH palettes (Page {validCurrentPage} of {totalPages})
+                {filteredPalettes.length.toLocaleString()} curated OKLCH palettes (Page {validCurrentPage} of {totalPages})
               </p>
             </div>
 
@@ -111,13 +243,183 @@ export default function ExplorePage() {
               <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
               <input
                 type="text"
-                placeholder="Search 240+ palettes by name, tag, or hex..."
+                placeholder="Search by name, hex (#ff5733), or color (mint, navy)..."
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="w-full pl-9 pr-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
+                className="w-full pl-9 pr-8 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
               />
+              {searchQuery && (
+                <button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setCurrentPage(1);
+                    syncUrl(selectedStyle, selectedCount, "", 1, true);
+                  }}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 p-0.5"
+                  title="Clear search"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           </div>
+
+          {/* Interactive Filter Panel (Styles & Color Counts) */}
+          <div className="mb-8 p-5 bg-zinc-900/70 border border-zinc-800/80 rounded-2xl shadow-sm backdrop-blur-sm space-y-4">
+            {/* Styles Row */}
+            <div>
+              <div className="flex items-center justify-between mb-2.5">
+                <div className="flex items-center space-x-2">
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-indigo-400" />
+                  <h2 className="text-sm font-semibold text-zinc-200">Styles</h2>
+                  {selectedStyle && (
+                    <span className="text-[11px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full">
+                      {selectedStyle}
+                    </span>
+                  )}
+                </div>
+                {hasActiveFilters && (
+                  <button
+                    onClick={handleClearFilters}
+                    className="text-xs text-zinc-400 hover:text-indigo-400 transition-colors flex items-center space-x-1 cursor-pointer"
+                  >
+                    <X className="w-3 h-3" />
+                    <span>Reset filters</span>
+                  </button>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleStyleClick(null)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                    selectedStyle === null
+                      ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm"
+                      : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                  }`}
+                >
+                  All
+                </button>
+                {STYLE_OPTIONS.map((style) => {
+                  const isActive = selectedStyle === style;
+                  return (
+                    <button
+                      key={style}
+                      type="button"
+                      onClick={() => handleStyleClick(style)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                        isActive
+                          ? "bg-zinc-100 text-zinc-950 font-bold shadow-sm ring-2 ring-indigo-500/30"
+                          : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                      }`}
+                    >
+                      {style}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Sizes (Color Count: 2 to 8) Row */}
+            <div className="pt-3 border-t border-zinc-800/60">
+              <div className="flex items-center space-x-2 mb-2.5">
+                <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
+                <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                  Palette Size
+                </h3>
+                {selectedCount && (
+                  <span className="text-[11px] font-medium text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">
+                    {selectedCount} Colors
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleCountClick(null)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                    selectedCount === null
+                      ? "bg-indigo-600 text-white font-bold shadow-sm"
+                      : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                  }`}
+                >
+                  All Sizes
+                </button>
+                {COLOR_COUNT_OPTIONS.map((count) => {
+                  const isActive = selectedCount === count;
+                  return (
+                    <button
+                      key={count}
+                      type="button"
+                      onClick={() => handleCountClick(count)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                        isActive
+                          ? "bg-indigo-600 text-white font-bold shadow-sm ring-2 ring-indigo-500/30"
+                          : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                      }`}
+                    >
+                      {count} Colors
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Active Filter Pills Bar (if filters selected) */}
+          {hasActiveFilters && (
+            <div className="flex flex-wrap items-center gap-2 mb-6 text-xs text-zinc-400">
+              <span className="font-medium text-zinc-300">Active Filters:</span>
+              {selectedStyle && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200">
+                  Style: <strong className="text-white">{selectedStyle}</strong>
+                  <button
+                    onClick={() => handleStyleClick(selectedStyle)}
+                    className="hover:text-red-400 ml-1 p-0.5"
+                    title="Remove style filter"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {selectedCount && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono">
+                  Size: <strong className="text-white">{selectedCount} Colors</strong>
+                  <button
+                    onClick={() => handleCountClick(selectedCount)}
+                    className="hover:text-red-400 ml-1 p-0.5"
+                    title="Remove size filter"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {searchQuery.trim() && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200">
+                  Search: <strong className="text-white">&ldquo;{searchQuery}&rdquo;</strong>
+                  <button
+                    onClick={() => {
+                      setSearchQuery("");
+                      setCurrentPage(1);
+                      syncUrl(selectedStyle, selectedCount, "", 1, true);
+                    }}
+                    className="hover:text-red-400 ml-1 p-0.5"
+                    title="Clear search"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              <button
+                onClick={handleClearFilters}
+                className="text-xs text-indigo-400 hover:text-indigo-300 ml-1 font-semibold transition-colors"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
 
           {/* Palettes Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -129,7 +431,7 @@ export default function ExplorePage() {
                   key={p.id}
                   className="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-lg hover:border-zinc-700 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl flex flex-col group"
                 >
-                  {/* Visual 5-Color Strip (Click to open in Generator) */}
+                  {/* Visual Swatch Strip (2 to 8 colors proportionally rendered) */}
                   <Link
                     href={`/palette/${slug}`}
                     className="h-28 flex w-full cursor-pointer relative overflow-hidden"
@@ -140,6 +442,7 @@ export default function ExplorePage() {
                         key={i}
                         className="flex-1 h-full transition-transform duration-300 group-hover:scale-y-105 origin-bottom"
                         style={{ backgroundColor: hex }}
+                        title={`${p.colorNames[i] || "Color"}: ${hex}`}
                       />
                     ))}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
@@ -152,30 +455,55 @@ export default function ExplorePage() {
                   {/* Card Details */}
                   <div className="p-4 flex flex-col justify-between flex-1">
                     <div>
-                      <h3 className="font-semibold text-sm text-zinc-100 mb-2 truncate">
+                      <h3 className="font-semibold text-sm text-zinc-100 mb-2 truncate" title={p.name}>
                         {p.name}
                       </h3>
 
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {p.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 rounded-md bg-zinc-800/80 text-[10px] text-zinc-400 font-mono"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
+                      {/* Filter Badges: Style + Color Count (Replaced #tags) */}
+                      <div className="flex flex-wrap items-center gap-1.5 mb-3">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleStyleClick(p.style);
+                          }}
+                          className={`px-2.5 py-0.5 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
+                            selectedStyle === p.style
+                              ? "bg-zinc-100 text-zinc-950 font-semibold"
+                              : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/50"
+                          }`}
+                          title={`Filter by style: ${p.style}`}
+                        >
+                          {p.style}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleCountClick(p.colorCount);
+                          }}
+                          className={`px-2 py-0.5 rounded-md text-[11px] font-mono transition-all cursor-pointer ${
+                            selectedCount === p.colorCount
+                              ? "bg-indigo-600 text-white font-semibold"
+                              : "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 border border-zinc-700/50"
+                          }`}
+                          title={`Filter by size: ${p.colorCount} Colors`}
+                        >
+                          {p.colorCount} Colors
+                        </button>
                       </div>
                     </div>
 
                     {/* Bottom Hex Bar & Quick Copy Button */}
                     <div className="pt-3 border-t border-zinc-800/70 flex items-center justify-between">
-                      <div className="flex space-x-1.5 font-mono text-[10px] text-zinc-400 truncate">
-                        {p.colors.slice(0, 3).map((c) => (
+                      <div className="flex items-center space-x-1.5 font-mono text-[10px] text-zinc-400 truncate">
+                        {p.colors.slice(0, 4).map((c) => (
                           <span key={c}>{c.toUpperCase()}</span>
                         ))}
-                        {p.colors.length > 3 && <span>+{p.colors.length - 3}</span>}
+                        {p.colors.length > 4 && <span>+{p.colors.length - 4}</span>}
                       </div>
 
                       <button
@@ -197,8 +525,20 @@ export default function ExplorePage() {
           </div>
 
           {filteredPalettes.length === 0 && (
-            <div className="text-center py-24 text-zinc-500 text-sm">
-              No palettes found matching &ldquo;{searchQuery}&rdquo;. Try another color name or hex!
+            <div className="text-center py-24 bg-zinc-900/30 border border-zinc-800/60 rounded-2xl my-6">
+              <Compass className="w-10 h-10 text-zinc-600 mx-auto mb-3" />
+              <p className="text-zinc-300 font-semibold text-base mb-1">
+                No palettes found
+              </p>
+              <p className="text-zinc-500 text-xs max-w-sm mx-auto mb-4">
+                No results match your current combination of style, size, or search query.
+              </p>
+              <button
+                onClick={handleClearFilters}
+                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white shadow-md transition-colors"
+              >
+                Reset All Filters
+              </button>
             </div>
           )}
         </div>
@@ -269,5 +609,22 @@ export default function ExplorePage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function ExplorePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen w-full bg-zinc-950 text-zinc-100 flex items-center justify-center">
+          <div className="flex items-center space-x-3 text-zinc-400 text-sm">
+            <Compass className="w-5 h-5 animate-spin text-indigo-400" />
+            <span>Loading 2,100+ curated palettes...</span>
+          </div>
+        </div>
+      }
+    >
+      <ExploreContent />
+    </Suspense>
   );
 }
